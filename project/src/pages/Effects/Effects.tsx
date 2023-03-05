@@ -18,7 +18,7 @@ function Effects(): JSX.Element {
                   </div>
                 </li>
                 <li className="header__nav-item">
-                  <a className="header__nav-link" href="#">
+                  <a className="header__nav-link" href="/">
                     <span className="header__signout">Sign out</span>
                   </a>
                 </li>
@@ -33,22 +33,22 @@ function Effects(): JSX.Element {
           <div className="property__gallery-container container">
             <div className="property__gallery">
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/room.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/room.jpg" alt="Room" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/apartment-01.jpg" alt="Apartment" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-02.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/apartment-02.jpg" alt="Apartment" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-03.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/apartment-03.jpg" alt="Apartment" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/studio-01.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/studio-01.jpg" alt="Studio" />
               </div>
               <div className="property__image-wrapper">
-                <img className="property__image" src="img/apartment-01.jpg" alt="Photo studio" />
+                <img className="property__image" src="img/apartment-01.jpg" alt="Apartment" />
               </div>
             </div>
           </div>
@@ -224,8 +224,8 @@ function Effects(): JSX.Element {
             <div className="near-places__list places__list">
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image" />
+                  <a href="/">
+                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -242,7 +242,7 @@ function Effects(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
+                    <a href="/">Wood and stone place</a>
                   </h2>
                   <p className="place-card__type">Private room</p>
                 </div>
@@ -250,8 +250,8 @@ function Effects(): JSX.Element {
 
               <article className="near-places__card place-card">
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image" />
+                  <a href="/">
+                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -268,7 +268,7 @@ function Effects(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Canal View Prinsengracht</a>
+                    <a href="/">Canal View Prinsengracht</a>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
@@ -279,8 +279,8 @@ function Effects(): JSX.Element {
                   <span>Premium</span>
                 </div>
                 <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <a href="#">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place image" />
+                  <a href="/">
+                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place" />
                   </a>
                 </div>
                 <div className="place-card__info">
@@ -297,7 +297,7 @@ function Effects(): JSX.Element {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Nice, cozy, warm big bed apartment</a>
+                    <a href="/">Nice, cozy, warm big bed apartment</a>
                   </h2>
                   <p className="place-card__type">Apartment</p>
                 </div>
