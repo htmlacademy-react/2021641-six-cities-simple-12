@@ -1,7 +1,7 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import SixCities from '../../pages/six-cities/six-cities';
-import NotFound from '../../not-found';
+import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
 // import Effects from '../../pages/Effects/Effects';
 import OfferCard from '../offer-card/offer-card';
