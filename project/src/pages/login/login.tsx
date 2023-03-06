@@ -1,6 +1,6 @@
 function Login(): JSX.Element {
   return (
-    <div>
+    <div className="page--login">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
