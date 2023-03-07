@@ -5,12 +5,14 @@ import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
 // import Effects from '../../pages/Effects/Effects';
 import OfferCard from '../offer-card/offer-card';
+import {Offer} from '../../types/offer';
 
 type AppSitiesProps = {
   offerCount: number;
+  offers: Offer;
 }
 
-function App({offerCount}: AppSitiesProps): JSX.Element {
+function App({offerCount, offers}: AppSitiesProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
