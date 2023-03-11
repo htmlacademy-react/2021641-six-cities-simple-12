@@ -1,13 +1,21 @@
 import {Link} from 'react-router-dom';
+import {Reviews} from '../../types/review';
 
-function Effects(): JSX.Element {
+type ReviewProps = {
+  review: Reviews;
+};
+
+
+function Property({review}: ReviewProps): JSX.Element {
+  const changeRating = `${review.rating / 0.05}%`;
+
   return (
-    <div>
+    <div className="page">
       <header className="header">
         <div className="container">
           <div className="header__wrapper">
             <div className="header__left">
-              <Link className="header__logo-link" to="main.html">
+              <Link className="header__logo-link" to="/">
                 <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
               </Link>
             </div>
@@ -66,7 +74,7 @@ function Effects(): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{ width: '80%' }}></span>
+                  <span style={{width: '80%'}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="property__rating-value rating__value">4.8</span>
@@ -149,23 +157,23 @@ function Effects(): JSX.Element {
                   <li className="reviews__item">
                     <div className="reviews__user user">
                       <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src="img/avatar-max.jpg" width="54" height="54" alt="Reviews avatar" />
+                        <img className="reviews__avatar user__avatar" src="{review.avatar}" width="54" height="54" alt="Reviews avatar" />
                       </div>
                       <span className="reviews__user-name">
-                        Max
+                        {review.name}
                       </span>
                     </div>
                     <div className="reviews__info">
                       <div className="reviews__rating rating">
                         <div className="reviews__stars rating__stars">
-                          <span style={{ width: '80%' }}></span>
+                          <span style={{width: changeRating}}></span>
                           <span className="visually-hidden">Rating</span>
                         </div>
                       </div>
                       <p className="reviews__text">
                         A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
                       </p>
-                      <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+                      <time className="reviews__time" dateTime="2019-04-24">{review.date}</time>
                     </div>
                   </li>
                 </ul>
@@ -239,7 +247,7 @@ function Effects(): JSX.Element {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: '80%' }}></span>
+                      <span style={{width: '80%'}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -265,7 +273,7 @@ function Effects(): JSX.Element {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: '80%' }}></span>
+                      <span style={{width: '80%'}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -294,7 +302,7 @@ function Effects(): JSX.Element {
                   </div>
                   <div className="place-card__rating rating">
                     <div className="place-card__stars rating__stars">
-                      <span style={{ width: '100%' }}></span>
+                      <span style={{width: '100%'}}></span>
                       <span className="visually-hidden">Rating</span>
                     </div>
                   </div>
@@ -312,4 +320,4 @@ function Effects(): JSX.Element {
   );
 }
 
-export default Effects;
+export default Property;

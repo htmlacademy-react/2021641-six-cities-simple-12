@@ -3,22 +3,23 @@ import {AppRoute} from '../../const';
 import SixCities from '../../pages/six-cities/six-cities';
 import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
-// import Effects from '../../pages/Effects/Effects';
-import OfferCard from '../offer-card/offer-card';
+import Property from '../../pages/property/property';
 import {Offer} from '../../types/offer';
+import {Reviews} from '../../types/review';
 
 type AppSitiesProps = {
   offerCount: number;
-  offers: Offer;
+  offers: Offer[];
+  reviews: Reviews[];
 }
 
-function App({offerCount, offers}: AppSitiesProps): JSX.Element {
+function App({offerCount, offers, reviews}: AppSitiesProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<SixCities offerCount={offerCount} />}
+          element={<SixCities offerCount={offerCount} offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
@@ -26,7 +27,7 @@ function App({offerCount, offers}: AppSitiesProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<OfferCard />}
+          element={<Property reviews={reviews} />}
         />
         <Route
           path="*"

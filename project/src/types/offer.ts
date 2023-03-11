@@ -1,11 +1,12 @@
-export type OfferCardType = {
+export type Offer = {
     id: number;
     type: string;
     src: string;
+    premium: boolean;
     description: string;
-    price: string;
+    price: number;
+    rating: number;
     rooms: string;
-    adults: string;
+    adults: number;
+    options: string[];
 };
-
-export type Offer = OfferCardType[];
