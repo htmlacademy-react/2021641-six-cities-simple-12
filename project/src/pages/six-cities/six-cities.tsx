@@ -1,13 +1,22 @@
+import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import OfferCard from '../../components/offer-card/offer-card';
 import SitySort from '../../components/sity-sort/sity-sort';
 import HotelSort from '../../components/hotel-sort/hotel-sort';
+import {Offer} from '../../types/offer';
 
 type SixCitiesProps = {
   offerCount: number;
+  offers: Offer[];
 }
 
-function SixCities({offerCount}: SixCitiesProps): JSX.Element {
+function SixCities({offerCount, offers}: SixCitiesProps): JSX.Element {
+  const [, setOfferCard] = useState(0);
+
+  const handleOfferCardMouseEnter = (id: number) => {
+    setOfferCard(id);
+  };
+
   return (
     <div className="page--main">
       <div className="container">
@@ -48,11 +57,12 @@ function SixCities({offerCount}: SixCitiesProps): JSX.Element {
                 <HotelSort />
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
+                {offers.map((offer) =>
+                  (<OfferCard key={offer.id}
+                    offer={offer}
+                    onOfferCardMouseEnter={handleOfferCardMouseEnter}
+                  />
+                  ))}
               </div>
             </section>
             <div className="cities__right-section">
