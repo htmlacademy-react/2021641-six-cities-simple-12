@@ -4,7 +4,7 @@ export const reviews: Reviews[] = [
   {
     id: 1,
     avatar: 'img/avatar-max.jpg',
-    name: 'Alexander',
+    name: 'Alex',
     rating: 5,
     date: 'April 2020',
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
@@ -20,7 +20,7 @@ export const reviews: Reviews[] = [
   {
     id: 3,
     avatar: 'img/avatar-angelina.jpg',
-    name: 'Svetlana',
+    name: 'Nina',
     rating: 3.5,
     date: 'November 2019',
     comment: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Hamburg. The building is green and from 18th century.',

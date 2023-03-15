@@ -8,18 +8,17 @@ import {Offer} from '../../types/offer';
 import {Reviews} from '../../types/review';
 
 type AppSitiesProps = {
-  offerCount: number;
   offers: Offer[];
   reviews: Reviews[];
 }
 
-function App({offerCount, offers, reviews}: AppSitiesProps): JSX.Element {
+function App({offers, reviews}: AppSitiesProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
-          element={<SixCities offerCount={offerCount} offers={offers} />}
+          element={<SixCities offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
@@ -27,7 +26,7 @@ function App({offerCount, offers, reviews}: AppSitiesProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Property reviews={reviews} />}
+          element={<Property offers={offers} reviews={reviews} />}
         />
         <Route
           path="*"

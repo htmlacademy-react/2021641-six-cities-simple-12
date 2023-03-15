@@ -3,26 +3,37 @@ import {Offer} from '../../types/offer';
 
 type OfferProps = {
   offer: Offer;
-  onOfferCardMouseEnter: (id: number) => void;
+  setCard(event: number): void;
 };
 
-function OfferCard ({offer, onOfferCardMouseEnter}: OfferProps): JSX.Element {
-  const {id} = offer;
-  const changeRating = `${offer.rating / 0.05}%`;
-  const offerUrl = `/offer/${offer.id}`;
+function OfferCard ({offer, setCard}: OfferProps): JSX.Element {
+  const {id, src, type, description, price, premium, rating} = offer;
+  const changeRating = `${Math.round(rating) / 0.05}%`;
+  const offerUrl = `/offer/${id}`;
+
+  const handleCardMouseEnter = (event: React.MouseEvent<HTMLDivElement>): void => {
+    setCard(id);
+  };
+
+  const handleCardMouseLeave = (): void => {
+    setCard(-1);
+  };
 
   return (
-    <article className="cities__card place-card" key={id} onMouseEnter={() => {onOfferCardMouseEnter(id);}}>
-      {offer.premium && <div className="place-card__mark"><span>Premium</span></div>}
+    <article className="cities__card place-card" key={id}
+      onMouseEnter={handleCardMouseEnter}
+      onMouseLeave={handleCardMouseLeave}
+    >
+      {premium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
-          <img className="place-card__image" src={offer.src} width="260" height="200" alt="Apartment" />
+          <img className="place-card__image" src={src[0]} width="260" height="200" alt="Apartment" />
         </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
 
@@ -34,9 +45,9 @@ function OfferCard ({offer, onOfferCardMouseEnter}: OfferProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={offerUrl}>{offer.description}</Link>
+          <Link to={offerUrl}>{description}</Link>
         </h2>
-        <p className="place-card__type">{offer.type}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
