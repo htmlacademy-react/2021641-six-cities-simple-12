@@ -1,5 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
+import {AppRoute} from '../../const';
+import changeRating from '../../utils';
 
 type OfferProps = {
   offer: Offer;
@@ -8,8 +10,7 @@ type OfferProps = {
 
 function OfferCard ({offer, setCard}: OfferProps): JSX.Element {
   const {id, src, type, description, price, premium, rating} = offer;
-  const changeRating = `${Math.round(rating) / 0.05}%`;
-  const offerUrl = `/offer/${id}`;
+  const offerUrl = `${AppRoute.OfferRoom}${id}`;
 
   const handleCardMouseEnter = (event: React.MouseEvent<HTMLDivElement>): void => {
     setCard(id);
@@ -40,8 +41,8 @@ function OfferCard ({offer, setCard}: OfferProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: changeRating}}></span>
-            <span className="visually-hidden">Rating</span>
+            <span style={{width: changeRating(rating)}}></span>
+            <span className="visually-hidden">{changeRating(rating)}</span>
           </div>
         </div>
         <h2 className="place-card__name">

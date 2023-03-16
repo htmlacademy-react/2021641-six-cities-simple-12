@@ -1,9 +1,12 @@
 import {Link, useParams, Navigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import PropertyPhoto from '../../components/property-photo/property-photo';
+import Comments from '../../components/comments/comments';
 import {Offer} from '../../types/offer';
 import {Reviews} from '../../types/review';
+import changeRating from '../../utils';
 
 type PropertyProps = {
   offers: Offer[];
@@ -14,15 +17,12 @@ type PropertyProps = {
 function Property({offers, reviews}: PropertyProps): JSX.Element {
   const params = useParams();
   const offerProperty = offers.find((offer) => offer.id === Number(params.id));
-  const reviewProperty = reviews.find((review) => review.id === Number(params.id));
 
-  if (offerProperty === undefined || reviewProperty === undefined) {
-    return (<Navigate to="/404" />);
+  if (offerProperty === undefined) {
+    return (<Navigate to={AppRoute.NotFound} />);
   }
 
-  const changeRating = `${(offerProperty.rating) / 0.05}%`;
-  const changeRatingNumber = `${(offerProperty.rating) / 1}`;
-  // const comments: string[] = reviewProperty;
+  const {rating, rooms, adults, price, host} = offerProperty;
 
   return (
     <div className="page">
@@ -70,24 +70,24 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
               </div>
               <div className="property__rating rating">
                 <div className="property__stars rating__stars">
-                  <span style={{width: changeRating}}></span>
+                  <span style={{width: changeRating(rating)}}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="property__rating-value rating__value">{changeRatingNumber}</span>
+                <span className="property__rating-value rating__value">{rating}</span>
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
                   {offerProperty.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offerProperty.rooms > 1 ? `${offerProperty.rooms} Bedrooms` : `${offerProperty.rooms} Bedroom`}
+                  {offerProperty.rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {offerProperty.adults > 1 ? `Max ${offerProperty.adults} adults` : `Max ${offerProperty.adults} adult`}
+                  {offerProperty.adults > 1 ? `Max ${adults} adults` : `Max ${adults} adult`}
                 </li>
               </ul>
               <div className="property__price">
-                <b className="property__price-value">&euro;{offerProperty.price}</b>
+                <b className="property__price-value">&euro;{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
               <div className="property__inside">
@@ -100,12 +100,12 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={offerProperty.host.avatar} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatar} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
-                    {offerProperty.host.name}
+                    {host.name}
                   </span>
-                  {offerProperty.host.status && <span className="property__user-status">Pro</span>}
+                  {host.status && <span className="property__user-status">Pro</span>}
                 </div>
                 <div className="property__description">
                   <p className="property__text">
@@ -119,28 +119,7 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
               <section className="property__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ul className="reviews__list">
-                  <li className="reviews__item">
-                    <div className="reviews__user user">
-                      <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                        <img className="reviews__avatar user__avatar" src={reviewProperty.avatar} width="54" height="54" alt="Reviews avatar" />
-                      </div>
-                      <span className="reviews__user-name">
-                        {reviewProperty.name}
-                      </span>
-                    </div>
-                    <div className="reviews__info">
-                      <div className="reviews__rating rating">
-                        <div className="reviews__stars rating__stars">
-                          <span style={{width: '80%'}}></span>
-                          <span className="visually-hidden">Rating</span>
-                        </div>
-                      </div>
-                      <p className="reviews__text">
-                        A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                      </p>
-                      <time className="reviews__time" dateTime="2019-04-24">{reviewProperty.date}</time>
-                    </div>
-                  </li>
+                  <Comments reviews={reviews} />
                 </ul>
                 <ReviewForm />
               </section>

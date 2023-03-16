@@ -7,7 +7,7 @@ type OfferListProps = {
 }
 
 function OffersList ({offers}: OfferListProps): JSX.Element {
-  const [card, setCard] = useState(-1);
+  const [, setCard] = useState(-1);
   // console.log(card);
 
   return (
