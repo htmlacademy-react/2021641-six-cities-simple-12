@@ -1,13 +1,15 @@
 import {Link} from 'react-router-dom';
-import OfferCard from '../../components/offer-card/offer-card';
+import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import HotelSort from '../../components/hotel-sort/hotel-sort';
+import NoPlaces from '../../components/no-places/no-places';
+import {Offer} from '../../types/offer';
 
 type SixCitiesProps = {
-  offerCount: number;
+  offers: Offer[];
 }
 
-function SixCities({offerCount}: SixCitiesProps): JSX.Element {
+function SixCities({offers}: SixCitiesProps): JSX.Element {
   return (
     <div className="page--main">
       <div className="container">
@@ -41,20 +43,15 @@ function SixCities({offerCount}: SixCitiesProps): JSX.Element {
         </div>
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offerCount} places to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
-                <HotelSort />
-              </form>
-              <div className="cities__places-list places__list tabs__content">
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-                <OfferCard />
-              </div>
-            </section>
+            {offers.length > 0 ? (
+              <section className="cities__places places">
+                <h2 className="visually-hidden">Places</h2>
+                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+                <form className="places__sorting" action="#" method="get">
+                  <HotelSort />
+                </form>
+                <OffersList offers={offers} />
+              </section>) : <NoPlaces />}
             <div className="cities__right-section">
               <section className="cities__map map"></section>
             </div>
