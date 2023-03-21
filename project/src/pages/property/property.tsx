@@ -22,7 +22,7 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
     return (<Navigate to={AppRoute.NotFound} />);
   }
 
-  const {rating, rooms, adults, price, host} = offerProperty;
+  const {rating, rooms, maxAdults, price, host, isPremium} = offerProperty;
 
   return (
     <div className="page">
@@ -62,7 +62,7 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
           </div>
           <div className="property__container container">
             <div className="property__wrapper">
-              {offerProperty.premium && <div className="property__mark"><span>Premium</span></div>}
+              {isPremium && <div className="property__mark"><span>Premium</span></div>}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
                   Beautiful &amp; luxurious studio at great location
@@ -83,7 +83,7 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
                   {offerProperty.rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {offerProperty.adults > 1 ? `Max ${adults} adults` : `Max ${adults} adult`}
+                  {offerProperty.maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
                 </li>
               </ul>
               <div className="property__price">
