@@ -5,30 +5,22 @@ import changeRating from '../../utils';
 
 type OfferProps = {
   offer: Offer;
-  setCard(event: number): void;
+  setActiveItem(id: number): void;
 };
 
-function OfferCard ({offer, setCard}: OfferProps): JSX.Element {
-  const {id, src, type, description, price, premium, rating} = offer;
+function OfferCard ({offer, setActiveItem}: OfferProps): JSX.Element {
+  const {id, previewImage, type, title, price, isPremium, rating} = offer;
   const offerUrl = `${AppRoute.OfferRoom}${id}`;
 
-  const handleCardMouseEnter = (event: React.MouseEvent<HTMLDivElement>): void => {
-    setCard(id);
-  };
-
-  const handleCardMouseLeave = (): void => {
-    setCard(-1);
-  };
-
   return (
-    <article className="cities__card place-card" key={id}
-      onMouseEnter={handleCardMouseEnter}
-      onMouseLeave={handleCardMouseLeave}
+    <article className="cities__card place-card"
+      onMouseOver={() => setActiveItem(id)}
+      onMouseOut={() => setActiveItem(-1)}
     >
-      {premium && <div className="place-card__mark"><span>Premium</span></div>}
+      {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
-          <img className="place-card__image" src={src[0]} width="260" height="200" alt="Apartment" />
+          <img className="place-card__image" src={previewImage[0]} width="260" height="200" alt="Apartment" />
         </Link>
       </div>
       <div className="place-card__info">
@@ -42,11 +34,11 @@ function OfferCard ({offer, setCard}: OfferProps): JSX.Element {
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
             <span style={{width: changeRating(rating)}}></span>
-            <span className="visually-hidden">{changeRating(rating)}</span>
+            <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={offerUrl}>{description}</Link>
+          <Link to={offerUrl}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

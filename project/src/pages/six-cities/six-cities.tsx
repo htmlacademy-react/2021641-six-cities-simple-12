@@ -1,15 +1,14 @@
 import {Link} from 'react-router-dom';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
-import HotelSort from '../../components/hotel-sort/hotel-sort';
-import NoPlaces from '../../components/no-places/no-places';
-import {Offer} from '../../types/offer';
+import {Offer, City} from '../../types/offer';
 
 type SixCitiesProps = {
   offers: Offer[];
+  city: City;
 }
 
-function SixCities({offers}: SixCitiesProps): JSX.Element {
+function SixCities({offers, city}: SixCitiesProps): JSX.Element {
   return (
     <div className="page--main">
       <div className="container">
@@ -42,20 +41,7 @@ function SixCities({offers}: SixCitiesProps): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            {offers.length > 0 ? (
-              <section className="cities__places places">
-                <h2 className="visually-hidden">Places</h2>
-                <b className="places__found">{offers.length} places to stay in Amsterdam</b>
-                <form className="places__sorting" action="#" method="get">
-                  <HotelSort />
-                </form>
-                <OffersList offers={offers} />
-              </section>) : <NoPlaces />}
-            <div className="cities__right-section">
-              <section className="cities__map map"></section>
-            </div>
-          </div>
+          <OffersList offers={offers} city={city} />
         </div>
       </main>
     </div>

@@ -5,7 +5,7 @@ type PropertyPhotoProps = {
 }
 
 function PropertyPhoto ({offerProperty}: PropertyPhotoProps): JSX.Element {
-  const photos: string[] = offerProperty.src;
+  const photos: string[] = offerProperty.previewImage;
   return (
     <>
       {photos.map((photo, index) => (
