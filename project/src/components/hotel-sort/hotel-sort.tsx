@@ -1,6 +1,6 @@
 function HotelSort (): JSX.Element {
   return (
-    <>
+    <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by</span>
       <span className="places__sorting-type" tabIndex={0}>
         Popular
@@ -14,7 +14,7 @@ function HotelSort (): JSX.Element {
         <li className="places__option" tabIndex={0}>Price: high to low</li>
         <li className="places__option" tabIndex={0}>Top rated first</li>
       </ul>
-    </>
+    </form>
   );
 }
 

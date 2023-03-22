@@ -48,7 +48,7 @@ export const offers: Offer[] = [
     previewImage: ['img/apartment-01.jpg', 'img/apartment-03.jpg',
       'img/apartment-small-03.jpg', 'img/apartment-small-04.jpg', 'img/room.jpg', 'img/room-small.jpg',],
     isPremium: true,
-    title: 'Beautiful &amp; luxurious apartment at great location',
+    title: 'Beautiful luxurious apartment at great location',
     rating: 5,
     type: 'Apartment',
     rooms: 4,

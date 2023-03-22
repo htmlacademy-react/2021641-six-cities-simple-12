@@ -10,6 +10,7 @@ type MapProps = {
   offers: Offer[];
   city: City;
   activeItem: number | undefined;
+  className: string;
 }
 
 const defaultCustomIcon = new Icon({
@@ -25,21 +26,9 @@ const currentCustomIcon = new Icon({
 });
 
 
-function Map({city, offers, activeItem}: MapProps): JSX.Element {
+function Map({city, offers, activeItem, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
-
-  // const defaultCustomIcon = leaflet.icon({
-  //   iconUrl: URL_MARKER_DEFAULT,
-  //   iconSize: [40,40],
-  //   iconAnchor: [20,40],
-  // });
-
-  // const currentCustomIcon = leaflet.icon({
-  //   iconUrl: URL_MARKER_CURRENT,
-  //   iconSize: [40,40],
-  //   iconAnchor: [20,40],
-  // });
 
   useEffect(() => {
     if (map) {
@@ -61,7 +50,7 @@ function Map({city, offers, activeItem}: MapProps): JSX.Element {
   }, [map, offers, activeItem]);
 
   return (
-    <section className="cities__map map" ref={mapRef}></section>
+    <section className={`${className} map`} ref={mapRef}></section>
   );
 }
 

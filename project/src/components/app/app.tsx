@@ -3,7 +3,7 @@ import {AppRoute} from '../../const';
 import SixCities from '../../pages/six-cities/six-cities';
 import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
-import Property from '../../pages/property/property';
+import Room from '../../pages/room/room';
 import {Offer, City} from '../../types/offer';
 import {Reviews} from '../../types/review';
 
@@ -27,7 +27,7 @@ function App({offers, reviews, city}: AppSitiesProps): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<Property offers={offers} reviews={reviews} />}
+          element={<Room offers={offers} reviews={reviews} city={city} />}
         />
         <Route
           path="*"

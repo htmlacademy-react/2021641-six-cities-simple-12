@@ -2,6 +2,10 @@ import {Link} from 'react-router-dom';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import {Offer, City} from '../../types/offer';
+import HotelSort from '../../components/hotel-sort/hotel-sort';
+import NoPlaces from '../../components/no-places/no-places';
+import Map from '../../components/map/map';
+import { useState } from 'react';
 
 type SixCitiesProps = {
   offers: Offer[];
@@ -9,6 +13,12 @@ type SixCitiesProps = {
 }
 
 function SixCities({offers, city}: SixCitiesProps): JSX.Element {
+  const [activeItem, setActiveItem] = useState<number | undefined>(undefined);
+
+  const onListCardHover = (id: number | undefined) => {
+    setActiveItem(id);
+  };
+
   return (
     <div className="page--main">
       <div className="container">
@@ -41,7 +51,19 @@ function SixCities({offers, city}: SixCitiesProps): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <OffersList offers={offers} city={city} />
+          <div className="cities__places-container container">
+            <section className="cities__places places">
+              <h2 className="visually-hidden">Places</h2>
+              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
+              <HotelSort />
+              {offers.length > 0 ? (
+                <OffersList offers={offers} className="cities" onListCardHover={onListCardHover} />
+              ) : <NoPlaces />}
+            </section>
+            <div className="cities__right-section">
+              <Map offers={offers} city={city} activeItem={activeItem} className="cities__map" />
+            </div>
+          </div>
         </div>
       </main>
     </div>
