@@ -1,10 +1,10 @@
 import { Offer } from '../../types/offer';
 
-type PropertyPhotoProps = {
+type RoomPhotoProps = {
   offerProperty: Offer;
 }
 
-function PropertyPhoto ({offerProperty}: PropertyPhotoProps): JSX.Element {
+function RoomPhoto ({offerProperty}: RoomPhotoProps): JSX.Element {
   const photos: string[] = offerProperty.previewImage;
   return (
     <>
@@ -17,4 +17,4 @@ function PropertyPhoto ({offerProperty}: PropertyPhotoProps): JSX.Element {
   );
 }
 
-export default PropertyPhoto;
+export default RoomPhoto;

@@ -2,23 +2,36 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute} from '../../const';
 import changeRating from '../../utils';
+import cn from 'classnames';
 
 type OfferProps = {
   offer: Offer;
-  setActiveItem(id: number): void;
+  className: string;
+  onMouseOver?: (id: number) => void;
+  onMouseOut?: (id: number | undefined) => void;
 };
 
-function OfferCard ({offer, setActiveItem}: OfferProps): JSX.Element {
+function OfferCard ({offer, onMouseOver, onMouseOut, className}: OfferProps): JSX.Element {
   const {id, previewImage, type, title, price, isPremium, rating} = offer;
   const offerUrl = `${AppRoute.OfferRoom}${id}`;
 
   return (
-    <article className="cities__card place-card"
-      onMouseOver={() => setActiveItem(id)}
-      onMouseOut={() => setActiveItem(-1)}
+    <article
+      className={cn('place-card', {
+        'cities__card' : className === 'cities',
+        'near-places__card' : className === 'near',
+      })}
+      onMouseOver={() => {onMouseOver?.(id);}}
+      onMouseOut={() => {onMouseOut?.(undefined);}}
+      key={id}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={cn('place-card__image-wrapper',
+        {
+          'cities__image-wrapper': className === 'cities',
+          'near-places__image-wrapper': className === 'near',
+        })}
+      >
         <Link to={offerUrl}>
           <img className="place-card__image" src={previewImage[0]} width="260" height="200" alt="Apartment" />
         </Link>

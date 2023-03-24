@@ -1,5 +1,4 @@
 import {Offer} from '../../types/offer';
-// import Equipment from '../equipment/equipment';
 
 type EquipmentListProps = {
   offerProperty: Offer;

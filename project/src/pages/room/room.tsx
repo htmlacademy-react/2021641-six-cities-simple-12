@@ -1,28 +1,40 @@
 import {Link, useParams, Navigate} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {Helmet} from 'react-helmet-async';
 import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
-import PropertyPhoto from '../../components/property-photo/property-photo';
+import RoomPhoto from '../../components/room-photo/room-photo';
 import Comments from '../../components/comments/comments';
-import {Offer} from '../../types/offer';
+import OffersList from '../../components/offers-list/offers-list';
+import Map from '../../components/map/map';
+import {Offer, City} from '../../types/offer';
 import {Reviews} from '../../types/review';
 import changeRating from '../../utils';
+import {AppRoute} from '../../const';
+import {useState} from 'react';
 
-type PropertyProps = {
+type RoomProps = {
   offers: Offer[];
   reviews: Reviews[];
+  city: City;
 };
 
 
-function Property({offers, reviews}: PropertyProps): JSX.Element {
+function Room({offers, reviews, city}: RoomProps): JSX.Element {
   const params = useParams();
   const offerProperty = offers.find((offer) => offer.id === Number(params.id));
+  const [, setActiveItem] = useState<number | undefined>(undefined);
 
   if (offerProperty === undefined) {
     return (<Navigate to={AppRoute.NotFound} />);
   }
 
-  const {rating, rooms, maxAdults, price, host, isPremium} = offerProperty;
+  const onListCardHover = (id: number | undefined) => {
+    setActiveItem(id);
+  };
+
+  const nearOffers = offers.filter((offer) => offer.id !== Number(params.id));
+
+  const {rating, rooms, maxAdults, price, host, isPremium, id} = offerProperty;
 
   return (
     <div className="page">
@@ -54,10 +66,13 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
       </header>
 
       <main className="page__main page__main--property">
+        <Helmet>
+          <title>room</title>
+        </Helmet>
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <PropertyPhoto offerProperty={offerProperty}/>
+              <RoomPhoto offerProperty={offerProperty}/>
             </div>
           </div>
           <div className="property__container container">
@@ -125,92 +140,13 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
               </section>
             </div>
           </div>
-          <section className="property__map map"></section>
+          <Map offers={offers} city={city} activeItem={id} className="property__map" />
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <Link to="/">
-                    <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place" />
-                  </Link>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;80</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <Link to="/">Wood and stone place</Link>
-                  </h2>
-                  <p className="place-card__type">Private room</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <Link to="/">
-                    <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place" />
-                  </Link>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;132</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '80%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <Link to="/">Canal View Prinsengracht</Link>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
-
-              <article className="near-places__card place-card">
-                <div className="place-card__mark">
-                  <span>Premium</span>
-                </div>
-                <div className="near-places__image-wrapper place-card__image-wrapper">
-                  <Link to="/">
-                    <img className="place-card__image" src="img/apartment-03.jpg" width="260" height="200" alt="Place" />
-                  </Link>
-                </div>
-                <div className="place-card__info">
-                  <div className="place-card__price-wrapper">
-                    <div className="place-card__price">
-                      <b className="place-card__price-value">&euro;180</b>
-                      <span className="place-card__price-text">&#47;&nbsp;night</span>
-                    </div>
-                  </div>
-                  <div className="place-card__rating rating">
-                    <div className="place-card__stars rating__stars">
-                      <span style={{width: '100%'}}></span>
-                      <span className="visually-hidden">Rating</span>
-                    </div>
-                  </div>
-                  <h2 className="place-card__name">
-                    <Link to="/">Nice, cozy, warm big bed apartment</Link>
-                  </h2>
-                  <p className="place-card__type">Apartment</p>
-                </div>
-              </article>
+              <OffersList offers={nearOffers} className='near' onListCardHover={onListCardHover} />
             </div>
           </section>
         </div>
@@ -219,4 +155,4 @@ function Property({offers, reviews}: PropertyProps): JSX.Element {
   );
 }
 
-export default Property;
+export default Room;
