@@ -1,4 +1,5 @@
 import {Link} from 'react-router-dom';
+import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import {Offer, City} from '../../types/offer';
@@ -46,6 +47,9 @@ function SixCities({offers, city}: SixCitiesProps): JSX.Element {
         </div>
       </div>
       <main className="page__main page__main--index">
+        <Helmet>
+          <title>main</title>
+        </Helmet>
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <SitySort />

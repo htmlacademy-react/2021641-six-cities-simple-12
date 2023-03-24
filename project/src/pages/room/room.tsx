@@ -1,4 +1,5 @@
 import {Link, useParams, Navigate} from 'react-router-dom';
+import {Helmet} from 'react-helmet-async';
 import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import RoomPhoto from '../../components/room-photo/room-photo';
@@ -31,7 +32,6 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
     setActiveItem(id);
   };
 
-  // const nearOffers = offers.slice(0, offers.length > 3 ? 3 : offers.length);
   const nearOffers = offers.filter((offer) => offer.id !== Number(params.id));
 
   const {rating, rooms, maxAdults, price, host, isPremium, id} = offerProperty;
@@ -66,6 +66,9 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
       </header>
 
       <main className="page__main page__main--property">
+        <Helmet>
+          <title>room</title>
+        </Helmet>
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
