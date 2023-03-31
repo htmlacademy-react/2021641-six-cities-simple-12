@@ -7,13 +7,24 @@ import cn from 'classnames';
 type OfferProps = {
   offer: Offer;
   className: string;
-  onMouseOver?: (id: number) => void;
-  onMouseOut?: (id: number | undefined) => void;
+  setActiveItem?(id: number): void;
 };
 
-function OfferCard ({offer, onMouseOver, onMouseOut, className}: OfferProps): JSX.Element {
+function OfferCard ({offer, setActiveItem, className}: OfferProps): JSX.Element {
   const {id, previewImage, type, title, price, isPremium, rating} = offer;
   const offerUrl = `${AppRoute.OfferRoom}${id}`;
+
+  const handleMouseOver = () => {
+    if (setActiveItem !== undefined) {
+      setActiveItem(id);
+    }
+  };
+
+  const handleMouseOut = () => {
+    if (setActiveItem !== undefined) {
+      setActiveItem(-1);
+    }
+  };
 
   return (
     <article
@@ -21,8 +32,8 @@ function OfferCard ({offer, onMouseOver, onMouseOut, className}: OfferProps): JS
         'cities__card' : className === 'cities',
         'near-places__card' : className === 'near',
       })}
-      onMouseOver={() => {onMouseOver?.(id);}}
-      onMouseOut={() => {onMouseOut?.(undefined);}}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
       key={id}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}

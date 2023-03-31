@@ -9,19 +9,19 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 type MapProps = {
   offers: Offer[];
   city: City;
-  activeItem: number | undefined;
+  activeItem: number | null;
   className: string;
 }
 
 const defaultCustomIcon = new Icon({
   iconUrl: URL_MARKER_DEFAULT,
-  iconSize: [40,40],
+  iconSize: [27, 39],
   iconAnchor: [20,40],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: URL_MARKER_CURRENT,
-  iconSize: [40,40],
+  iconSize: [27, 39],
   iconAnchor: [20,40],
 });
 
@@ -30,8 +30,11 @@ function Map({city, offers, activeItem, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
+  const markers:Marker[] = [];
+
   useEffect(() => {
     if (map) {
+      map.panTo([city.location.latitude, city.location.longitude]);
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -45,9 +48,16 @@ function Map({city, offers, activeItem, className}: MapProps): JSX.Element {
               : defaultCustomIcon
           )
           .addTo(map);
+
+        markers.push(marker);
       });
+      return () => {
+        for (const marker of markers) {
+          marker.removeFrom(map);
+        }
+      };
     }
-  }, [map, offers, activeItem]);
+  }, [map, offers, activeItem, city]);
 
   return (
     <section className={`${className} map`} ref={mapRef}></section>

@@ -1,24 +1,26 @@
-import {Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
+import {AppRoute} from '../../const';
 import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import {Offer, City} from '../../types/offer';
-import HotelSort from '../../components/hotel-sort/hotel-sort';
-import NoPlaces from '../../components/no-places/no-places';
-import Map from '../../components/map/map';
-import { useState } from 'react';
+// import {useEffect} from 'react';
+import {useAppSelector} from '../../hooks/index';
+// import {loadOffer} from '../../store/action';
 
 type SixCitiesProps = {
   offers: Offer[];
-  city: City;
+  citys: City[];
 }
 
-function SixCities({offers, city}: SixCitiesProps): JSX.Element {
-  const [activeItem, setActiveItem] = useState<number | undefined>(undefined);
+function SixCities({offers, citys}: SixCitiesProps): JSX.Element {
+  const activeOffer = useAppSelector((state) => state.city);
+  const filteredOffers = offers.filter(({city}) => city.name === activeOffer);
+  const city = citys.find((item) => item.name === activeOffer);
 
-  const onListCardHover = (id: number | undefined) => {
-    setActiveItem(id);
-  };
+  if (city === undefined) {
+    return <Navigate to={AppRoute.NotFound} replace />;
+  }
 
   return (
     <div className="page--main">
@@ -46,7 +48,7 @@ function SixCities({offers, city}: SixCitiesProps): JSX.Element {
           </nav>
         </div>
       </div>
-      <main className="page__main page__main--index">
+      <main className={`page__main page__main--index ${offers.length < 1 ? 'page__main--index-empty' : ''}`}>
         <Helmet>
           <title>main</title>
         </Helmet>
@@ -55,19 +57,7 @@ function SixCities({offers, city}: SixCitiesProps): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in Amsterdam</b>
-              <HotelSort />
-              {offers.length > 0 ? (
-                <OffersList offers={offers} className="cities" onListCardHover={onListCardHover} />
-              ) : <NoPlaces />}
-            </section>
-            <div className="cities__right-section">
-              <Map offers={offers} city={city} activeItem={activeItem} className="cities__map" />
-            </div>
-          </div>
+          <OffersList city={city} offers={filteredOffers} className="cities" />
         </div>
       </main>
     </div>
