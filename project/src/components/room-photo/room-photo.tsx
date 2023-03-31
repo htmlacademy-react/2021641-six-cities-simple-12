@@ -1,11 +1,11 @@
 import { Offer } from '../../types/offer';
 
 type RoomPhotoProps = {
-  offerProperty: Offer;
+  offer: Offer;
 }
 
-function RoomPhoto ({offerProperty}: RoomPhotoProps): JSX.Element {
-  const photos: string[] = offerProperty.previewImage;
+function RoomPhoto ({offer}: RoomPhotoProps): JSX.Element {
+  const photos: string[] = offer.previewImage;
   return (
     <>
       {photos.map((photo, index) => (

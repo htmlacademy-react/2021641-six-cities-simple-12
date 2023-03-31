@@ -12,10 +12,10 @@ import ScrollTop from '../scroll-top/scroll-top';
 type AppSitiesProps = {
   offers: Offer[];
   reviews: Reviews[];
-  city: City;
+  citys: City[];
 }
 
-function App({offers, reviews, city}: AppSitiesProps): JSX.Element {
+function App({offers, reviews, citys}: AppSitiesProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +23,7 @@ function App({offers, reviews, city}: AppSitiesProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<SixCities offers={offers} city={city} />}
+            element={<SixCities offers={offers} citys={citys} />}
           />
           <Route
             path={AppRoute.Login}
@@ -31,7 +31,7 @@ function App({offers, reviews, city}: AppSitiesProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<Room offers={offers} reviews={reviews} city={city} />}
+            element={<Room offers={offers} reviews={reviews} citys={citys} />}
           />
           <Route
             path="*"

@@ -4,37 +4,30 @@ import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import RoomPhoto from '../../components/room-photo/room-photo';
 import Comments from '../../components/comments/comments';
-import OffersList from '../../components/offers-list/offers-list';
+import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offer, City} from '../../types/offer';
 import {Reviews} from '../../types/review';
 import changeRating from '../../utils';
 import {AppRoute} from '../../const';
-import {useState} from 'react';
+
 
 type RoomProps = {
   offers: Offer[];
   reviews: Reviews[];
-  city: City;
+  citys: City[];
 };
 
 
-function Room({offers, reviews, city}: RoomProps): JSX.Element {
+function Room({offers, reviews, citys}: RoomProps): JSX.Element {
   const params = useParams();
-  const offerProperty = offers.find((offer) => offer.id === Number(params.id));
-  const [, setActiveItem] = useState<number | undefined>(undefined);
+  const offer = offers.find((item) => item.id === Number(params.id));
 
-  if (offerProperty === undefined) {
-    return (<Navigate to={AppRoute.NotFound} />);
+  if (offer === undefined) {
+    return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const onListCardHover = (id: number | undefined) => {
-    setActiveItem(id);
-  };
-
-  const nearOffers = offers.filter((offer) => offer.id !== Number(params.id));
-
-  const {rating, rooms, maxAdults, price, host, isPremium, id} = offerProperty;
+  const {rating, rooms, maxAdults, price, host, isPremium, id} = offer;
 
   return (
     <div className="page">
@@ -72,7 +65,7 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <RoomPhoto offerProperty={offerProperty}/>
+              <RoomPhoto offer={offer}/>
             </div>
           </div>
           <div className="property__container container">
@@ -92,13 +85,13 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {offerProperty.type}
+                  {offer.type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offerProperty.rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
+                  {offer.rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {offerProperty.maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
+                  {offer.maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
                 </li>
               </ul>
               <div className="property__price">
@@ -108,7 +101,7 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <EquipmentList offerProperty={offerProperty}/>
+                  <EquipmentList offerProperty={offer}/>
                 </ul>
               </div>
               <div className="property__host">
@@ -140,15 +133,10 @@ function Room({offers, reviews, city}: RoomProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offers={offers} city={city} activeItem={id} className="property__map" />
+          <Map offers={offers} city={citys[0]} activeItem={id} className="property__map" />
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">Other places in the neighbourhood</h2>
-            <div className="near-places__list places__list">
-              <OffersList offers={nearOffers} className='near' onListCardHover={onListCardHover} />
-            </div>
-          </section>
+          <PlacesList offers={offers} num={id} className='near'/>
         </div>
       </main>
     </div>
