@@ -6,7 +6,9 @@ import {useState} from 'react';
 import Map from '../map/map';
 import HotelSort from '../hotel-sort/hotel-sort';
 import NoPlaces from '../no-places/no-places';
-import {AppRoute} from '../../const';
+import {AppRoute, SortsList} from '../../const';
+import {sortOffers} from '../../utils';
+import {useAppSelector} from '../../hooks/index';
 
 type OfferListProps = {
   offers: Offer[];
@@ -16,6 +18,8 @@ type OfferListProps = {
 
 function OffersList ({offers, className, city}: OfferListProps): JSX.Element {
   const [activeItem, setActiveItem] = useState<number | null>(-1);
+  const sortType = useAppSelector((state) => state.sortType);
+  const sortedOffers = sortOffers(offers, SortsList, sortType);
 
   if (activeItem === null) {
     return <Navigate to={AppRoute.NotFound} replace/>;
@@ -34,7 +38,7 @@ function OffersList ({offers, className, city}: OfferListProps): JSX.Element {
           })}
           >
             {
-              offers.map((offer) => (
+              sortedOffers.map((offer) => (
                 <OfferCard
                   key={offer.id}
                   offer={offer}

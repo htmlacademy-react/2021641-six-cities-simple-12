@@ -4,9 +4,7 @@ import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import {Offer, City} from '../../types/offer';
-// import {useEffect} from 'react';
 import {useAppSelector} from '../../hooks/index';
-// import {loadOffer} from '../../store/action';
 
 type SixCitiesProps = {
   offers: Offer[];
@@ -48,7 +46,7 @@ function SixCities({offers, citys}: SixCitiesProps): JSX.Element {
           </nav>
         </div>
       </div>
-      <main className={`page__main page__main--index ${offers.length < 1 ? 'page__main--index-empty' : ''}`}>
+      <main className={`page__main page__main--index ${filteredOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <Helmet>
           <title>main</title>
         </Helmet>

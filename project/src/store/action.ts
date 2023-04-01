@@ -8,4 +8,5 @@ export const Action = {
 };
 
 export const cityChange = createAction(Action.CITY_CHANGE, (city: string) => ({payload: city}));
-export const loadOffer = createAction<Offer[]>('offers/loadOffer');
+export const loadOffer = createAction<Offer[]>(Action.LOAD_OFFERS);
+export const sortChange = createAction(Action.SORT_CHANGE, (value: string) => ({payload: value}));
