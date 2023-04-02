@@ -8,7 +8,7 @@ import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
 import {Offer, City} from '../../types/offer';
 import {Reviews} from '../../types/review';
-import changeRating from '../../utils';
+import {changeRating} from '../../utils';
 import {AppRoute} from '../../const';
 
 
@@ -27,7 +27,7 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
     return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const {rating, rooms, maxAdults, price, host, isPremium, id} = offer;
+  const {rating, rooms, maxAdults, price, host, isPremium, id, city} = offer;
 
   return (
     <div className="page">
@@ -133,7 +133,7 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
               </section>
             </div>
           </div>
-          <Map offers={offers} city={citys[0]} activeItem={id} className="property__map" />
+          <Map offers={offers} city={city} activeItem={id} className="property__map" />
         </section>
         <div className="container">
           <PlacesList offers={offers} num={id} className='near'/>

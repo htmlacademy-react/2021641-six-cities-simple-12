@@ -16,7 +16,15 @@ export const Cities = [
   'Dusseldorf',
 ];
 
+export const SortsList = {
+  POPULAR: 'Popular',
+  PRICE_TO_HIGH: 'Price: low to high',
+  PRICE_TO_LOW: 'Price: high to low',
+  TOP_RATED: 'Top rated first',
+};
+
 export const DEFAULT_CITY = 'Paris';
+export const DEFAULT_SORT_TYPE = 'Popular';
 
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 

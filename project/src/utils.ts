@@ -1,8 +1,23 @@
-// const changeRating () => `${Math.round() / 0.05}%`;
-function changeRating (item: number) {
+import {Offer} from './types/offer';
+
+export function changeRating (item: number) {
   return (
     `${Math.round(item) / 0.05}%`
   );
 }
 
-export default changeRating;
+export const sortOffers = (offers: Offer[], sortList: {[key: string]: string}, type: string) => {
+  switch (type) {
+    case sortList.PRICE_TO_HIGH:
+      return offers.sort((a, b) => a.price - b.price);
+      break;
+    case sortList.PRICE_TO_LOW:
+      return offers.sort((a, b) => b.price - a.price);
+      break;
+    case sortList.TOP_RATED:
+      return offers.sort((a, b) => b.price - a.price);
+      break;
+    default:
+      return offers;
+  }
+};
