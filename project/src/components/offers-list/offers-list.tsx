@@ -11,26 +11,27 @@ import {sortOffers} from '../../utils';
 import {useAppSelector} from '../../hooks/index';
 
 type OfferListProps = {
-  offers: Offer[];
+  filteredOffers: Offer[];
   className: string;
   city: City;
+  activeOffer: string;
 }
 
-function OffersList ({offers, className, city}: OfferListProps): JSX.Element {
+function OffersList ({filteredOffers, className, city, activeOffer}: OfferListProps): JSX.Element {
   const [activeItem, setActiveItem] = useState<number | null>(-1);
   const sortType = useAppSelector((state) => state.sortType);
-  const sortedOffers = sortOffers(offers, SortsList, sortType);
+  const sortedOffers = sortOffers(filteredOffers, SortsList, sortType);
 
   if (activeItem === null) {
     return <Navigate to={AppRoute.NotFound} replace/>;
   }
 
   return (
-    <div className={`cities__places-container container ${offers.length === 0 ? 'cities__places-container--empty' : ''}`}>
-      {offers.length > 0 ? (
+    <div className={`cities__places-container container ${filteredOffers.length === 0 ? 'cities__places-container--empty' : ''}`}>
+      {filteredOffers.length > 0 ? (
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">{offers.length} places to stay in {city.name}</b>
+          <b className="places__found">{filteredOffers.length} places to stay in {activeOffer}</b>
           <HotelSort />
           <div className={cn('cities__places-list', {
             'places__list  tabs__content' : className === 'cities',
@@ -42,7 +43,6 @@ function OffersList ({offers, className, city}: OfferListProps): JSX.Element {
                 <OfferCard
                   key={offer.id}
                   offer={offer}
-                  className='cities'
                   setActiveItem={setActiveItem}
                 />
               ))
@@ -50,8 +50,8 @@ function OffersList ({offers, className, city}: OfferListProps): JSX.Element {
           </div>
         </section>) : <NoPlaces />}
       <div className="cities__right-section">
-        {offers.length > 0 ? (
-          <Map city={city} offers={offers} activeItem={activeItem} className="cities__map" />
+        {filteredOffers.length > 0 ? (
+          <Map city={city} offers={filteredOffers} activeItem={activeItem} className="cities__map" />
         ) : ''}
       </div>
     </div>

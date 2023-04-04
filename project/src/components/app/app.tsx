@@ -1,21 +1,23 @@
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
 import {HelmetProvider } from 'react-helmet-async';
+import {useAppSelector} from '../../hooks/index';
 import {AppRoute} from '../../const';
 import SixCities from '../../pages/six-cities/six-cities';
 import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
-import {Offer, City} from '../../types/offer';
-import {Reviews} from '../../types/review';
 import ScrollTop from '../scroll-top/scroll-top';
+import PrivateRoute from '../private-route/private-route';
+// import Spinner from '../spinner/spinner';
 
-type AppSitiesProps = {
-  offers: Offer[];
-  reviews: Reviews[];
-  citys: City[];
-}
+function App(): JSX.Element {
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  // const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-function App({offers, reviews, citys}: AppSitiesProps): JSX.Element {
+  // if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+  //   return (<Spinner />);
+  // }
+
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -23,7 +25,11 @@ function App({offers, reviews, citys}: AppSitiesProps): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={<SixCities offers={offers} citys={citys} />}
+            element={
+              <PrivateRoute authorizationStatus={authorizationStatus}>
+                <SixCities />
+              </PrivateRoute>
+            }
           />
           <Route
             path={AppRoute.Login}
@@ -31,7 +37,7 @@ function App({offers, reviews, citys}: AppSitiesProps): JSX.Element {
           />
           <Route
             path={AppRoute.Room}
-            element={<Room offers={offers} reviews={reviews} citys={citys} />}
+            element={<Room />}
           />
           <Route
             path="*"

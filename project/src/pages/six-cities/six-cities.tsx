@@ -3,18 +3,16 @@ import {AppRoute} from '../../const';
 import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
-import {Offer, City} from '../../types/offer';
 import {useAppSelector} from '../../hooks/index';
 
-type SixCitiesProps = {
-  offers: Offer[];
-  citys: City[];
-}
-
-function SixCities({offers, citys}: SixCitiesProps): JSX.Element {
+function SixCities(): JSX.Element {
   const activeOffer = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
   const filteredOffers = offers.filter(({city}) => city.name === activeOffer);
-  const city = citys.find((item) => item.name === activeOffer);
+  // const city = citys.find((item) => item.name === activeOffer);
+  const offer = filteredOffers.find((filtredOffer) => filtredOffer.city.name === activeOffer);
+
+  const city = offer?.city;
 
   if (city === undefined) {
     return <Navigate to={AppRoute.NotFound} replace />;
@@ -55,7 +53,7 @@ function SixCities({offers, citys}: SixCitiesProps): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <OffersList city={city} offers={filteredOffers} className="cities" />
+          <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} className="cities" />
         </div>
       </main>
     </div>

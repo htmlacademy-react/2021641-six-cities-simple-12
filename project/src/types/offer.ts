@@ -16,17 +16,21 @@ export type City = {
 }
 
 export type Offer = {
-    id: number;
+    id: OfferId;
     type: string;
-    previewImage: string[];
+    previewImage: string;
+    images: string[];
     isPremium: boolean;
     title: string;
+    description: string;
     price: number;
     rating: number;
     rooms: number;
     maxAdults: number;
-    options: string[];
+    goods: string[];
     host: Host;
     city: City;
     location: Location;
 };
+
+export type OfferId = number;

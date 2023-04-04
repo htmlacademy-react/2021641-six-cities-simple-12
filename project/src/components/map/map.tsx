@@ -9,7 +9,7 @@ import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../const';
 type MapProps = {
   offers: Offer[];
   city: City;
-  activeItem: number | null;
+  activeItem: number | undefined;
   className: string;
 }
 
@@ -30,9 +30,8 @@ function Map({city, offers, activeItem, className}: MapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
 
-  const markers:Marker[] = [];
-
   useEffect(() => {
+    const markers:Marker[] = [];
     if (map) {
       map.panTo([city.location.latitude, city.location.longitude]);
       offers.forEach((offer) => {
