@@ -1,18 +1,10 @@
-import {Offer} from '../../types/offer';
-
 type EquipmentListProps = {
-  offerProperty: Offer;
+  item: string;
 }
 
-function EquipmentList ({offerProperty}: EquipmentListProps): JSX.Element {
-  const equipment: string[] = offerProperty.options;
-
+function EquipmentList ({item}: EquipmentListProps): JSX.Element {
   return (
-    <>
-      {equipment.map((option, index) => (
-        <li className="property__inside-item" key={String(option) + String(index)}>{option}</li>)
-      )}
-    </>
+    <li className="property__inside-item">{item}</li>
   );
 }
 

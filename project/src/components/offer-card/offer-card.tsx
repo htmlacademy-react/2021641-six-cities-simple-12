@@ -2,15 +2,13 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute} from '../../const';
 import {changeRating} from '../../utils';
-import cn from 'classnames';
 
 type OfferProps = {
   offer: Offer;
-  className: string;
   setActiveItem?(id: number): void;
 };
 
-function OfferCard ({offer, setActiveItem, className}: OfferProps): JSX.Element {
+function OfferCard ({offer, setActiveItem}: OfferProps): JSX.Element {
   const {id, previewImage, type, title, price, isPremium, rating} = offer;
   const offerUrl = `${AppRoute.OfferRoom}${id}`;
 
@@ -28,23 +26,15 @@ function OfferCard ({offer, setActiveItem, className}: OfferProps): JSX.Element 
 
   return (
     <article
-      className={cn('place-card', {
-        'cities__card' : className === 'cities',
-        'near-places__card' : className === 'near',
-      })}
+      className="cities__card place-card"
       onMouseOver={handleMouseOver}
       onMouseOut={handleMouseOut}
       key={id}
     >
       {isPremium && <div className="place-card__mark"><span>Premium</span></div>}
-      <div className={cn('place-card__image-wrapper',
-        {
-          'cities__image-wrapper': className === 'cities',
-          'near-places__image-wrapper': className === 'near',
-        })}
-      >
+      <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={offerUrl}>
-          <img className="place-card__image" src={previewImage[0]} width="260" height="200" alt="Apartment" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt="Apartment" />
         </Link>
       </div>
       <div className="place-card__info">

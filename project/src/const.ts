@@ -7,6 +7,18 @@ export enum AppRoute {
   NotFound ='/404',
 }
 
+export enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+}
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
+
 export const Cities = [
   'Paris',
   'Cologne',

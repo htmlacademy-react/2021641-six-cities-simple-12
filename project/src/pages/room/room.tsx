@@ -3,31 +3,40 @@ import {Helmet} from 'react-helmet-async';
 import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import RoomPhoto from '../../components/room-photo/room-photo';
-import Comments from '../../components/comments/comments';
+// import Comments from '../../components/comments/comments';
 import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
-import {Offer, City} from '../../types/offer';
-import {Reviews} from '../../types/review';
 import {changeRating} from '../../utils';
 import {AppRoute} from '../../const';
+import {useEffect} from 'react';
+import {useAppSelector, useAppDispatch} from '../../hooks/index';
+import {store} from '../../store';
+import {Offer} from '../../types/offer';
+import {fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
 
+function Room(): JSX.Element {
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const {id} = useParams();
+  const offerId = Number(id);
+  const dispatch = useAppDispatch();
 
-type RoomProps = {
-  offers: Offer[];
-  reviews: Reviews[];
-  citys: City[];
-};
+  useEffect(() => {
+    store.dispatch(fetchOfferAction(offerId));
+    store.dispatch(fetchOffersNearbyAction(offerId));
+  }, [offerId, dispatch]);
 
+  let allOffers: Offer[] = [];
 
-function Room({offers, reviews, citys}: RoomProps): JSX.Element {
-  const params = useParams();
-  const offer = offers.find((item) => item.id === Number(params.id));
+  if (offersNearby !== null && currentOffer !== null) {
+    allOffers = [...offersNearby, currentOffer];
+  }
 
-  if (offer === undefined) {
+  if (currentOffer === null) {
     return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const {rating, rooms, maxAdults, price, host, isPremium, id, city} = offer;
+  const {images, rating, rooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
 
   return (
     <div className="page">
@@ -65,7 +74,9 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              <RoomPhoto offer={offer}/>
+              {images.map((image, index) =>
+                <RoomPhoto key={String(image) + String(index)} image={image}/>
+              )}
             </div>
           </div>
           <div className="property__container container">
@@ -85,13 +96,13 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
               </div>
               <ul className="property__features">
                 <li className="property__feature property__feature--entire">
-                  {offer.type}
+                  {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {offer.rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
+                  {rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
-                  {offer.maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
+                  {maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
                 </li>
               </ul>
               <div className="property__price">
@@ -101,7 +112,9 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
               <div className="property__inside">
                 <h2 className="property__inside-title">What&apos;s inside</h2>
                 <ul className="property__inside-list">
-                  <EquipmentList offerProperty={offer}/>
+                  {goods.map((item, index) => (
+                    <EquipmentList key={String(item) + String(index)} item={item}/>
+                  ))}
                 </ul>
               </div>
               <div className="property__host">
@@ -125,18 +138,18 @@ function Room({offers, reviews, citys}: RoomProps): JSX.Element {
                 </div>
               </div>
               <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
+                {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
                 <ul className="reviews__list">
-                  <Comments reviews={reviews} />
+                  {/* <Comments reviews={reviews} /> */}
                 </ul>
                 <ReviewForm />
               </section>
             </div>
           </div>
-          <Map offers={offers} city={city} activeItem={id} className="property__map" />
+          <Map offers={allOffers} city={city} activeItem={offerId} className="property__map" />
         </section>
         <div className="container">
-          <PlacesList offers={offers} num={id} className='near'/>
+          <PlacesList offers={offersNearby} num={offerId} />
         </div>
       </main>
     </div>
