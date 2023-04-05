@@ -1,7 +1,6 @@
 import {Navigate} from 'react-router-dom';
 import OfferCard from '../offer-card/offer-card';
 import {Offer, City} from '../../types/offer';
-import cn from 'classnames';
 import {useState} from 'react';
 import Map from '../map/map';
 import HotelSort from '../hotel-sort/hotel-sort';
@@ -12,12 +11,11 @@ import {useAppSelector} from '../../hooks/index';
 
 type OfferListProps = {
   filteredOffers: Offer[];
-  className: string;
   city: City;
   activeOffer: string;
 }
 
-function OffersList ({filteredOffers, className, city, activeOffer}: OfferListProps): JSX.Element {
+function OffersList ({filteredOffers, city, activeOffer}: OfferListProps): JSX.Element {
   const [activeItem, setActiveItem] = useState<number | null>(-1);
   const sortType = useAppSelector((state) => state.sortType);
   const sortedOffers = sortOffers(filteredOffers, SortsList, sortType);
@@ -33,11 +31,7 @@ function OffersList ({filteredOffers, className, city, activeOffer}: OfferListPr
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{filteredOffers.length} places to stay in {activeOffer}</b>
           <HotelSort />
-          <div className={cn('cities__places-list', {
-            'places__list  tabs__content' : className === 'cities',
-            'near-places__list' : className === 'near',
-          })}
-          >
+          <div className="cities__places-list places__list tabs__content">
             {
               sortedOffers.map((offer) => (
                 <OfferCard

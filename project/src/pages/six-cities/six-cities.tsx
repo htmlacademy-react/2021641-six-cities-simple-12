@@ -53,7 +53,7 @@ function SixCities(): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} className="cities" />
+          <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} />
         </div>
       </main>
     </div>

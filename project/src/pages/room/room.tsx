@@ -36,7 +36,7 @@ function Room(): JSX.Element {
     return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const {images, rating, rooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
+  const {images, rating, bedrooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
 
   return (
     <div className="page">
@@ -99,7 +99,7 @@ function Room(): JSX.Element {
                   {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
+                  {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
                   {maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
@@ -121,7 +121,7 @@ function Room(): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={host.avatar} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {host.name}
@@ -140,7 +140,7 @@ function Room(): JSX.Element {
               <section className="property__reviews reviews">
                 {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
                 <ul className="reviews__list">
-                  {/* <Comments reviews={reviews} /> */}
+                  {/* <Comments /> */}
                 </ul>
                 <ReviewForm />
               </section>

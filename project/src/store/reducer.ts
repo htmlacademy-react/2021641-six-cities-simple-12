@@ -1,7 +1,7 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {InitialState} from '../types/initial-state';
 import {DEFAULT_CITY, DEFAULT_SORT_TYPE, AuthorizationStatus,} from '../const';
-import {cityChange, loadOffers,loadOffer, sortChange, requireAuthorization, setOffersDataLoadingStatus} from './action';
+import {cityChange, loadOffers,loadOffer, loadOffersNearby, sortChange, requireAuthorization, setOffersDataLoadingStatus} from './action';
 
 const initialState: InitialState = {
   city: DEFAULT_CITY,
@@ -23,6 +23,9 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOffer, (state, action) => {
       state.currentOffer = action.payload;
+    })
+    .addCase(loadOffersNearby, (state, action) => {
+      state.offersNearby = action.payload;
     })
     .addCase(sortChange, (state, action) => {
       state.sortType = action.payload;
