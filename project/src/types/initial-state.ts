@@ -1,5 +1,6 @@
 import {Offer} from './offer';
 import {AuthorizationStatus} from '../const';
+import {UserData} from './user-data';
 
 export type InitialState = {
   offersNearby: Offer[] | [];
@@ -9,4 +10,7 @@ export type InitialState = {
   sortType: string;
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
+  isCurrentOfferLoading: boolean;
+  userData: UserData | null;
+  error: string | null;
 };

@@ -1,11 +1,13 @@
-import {Link, useParams, Navigate} from 'react-router-dom';
+import {useParams, Navigate} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
+import Header from '../../components/header/header';
 import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import RoomPhoto from '../../components/room-photo/room-photo';
 // import Comments from '../../components/comments/comments';
 import PlacesList from '../../components/places-list/places-list';
 import Map from '../../components/map/map';
+import Spinner from '../../components/spinner/spinner';
 import {changeRating} from '../../utils';
 import {AppRoute} from '../../const';
 import {useEffect} from 'react';
@@ -17,6 +19,7 @@ import {fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions
 function Room(): JSX.Element {
   const currentOffer = useAppSelector((state) => state.currentOffer);
   const offersNearby = useAppSelector((state) => state.offersNearby);
+  const isCurrentOfferLoading = useAppSelector((state) => state.isCurrentOfferLoading);
   const {id} = useParams();
   const offerId = Number(id);
   const dispatch = useAppDispatch();
@@ -32,40 +35,19 @@ function Room(): JSX.Element {
     allOffers = [...offersNearby, currentOffer];
   }
 
+  if (isCurrentOfferLoading) {
+    return <Spinner />;
+  }
+
   if (currentOffer === null) {
     return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const {images, rating, rooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
+  const {images, rating, bedrooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
 
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </Link>
-            </div>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="/">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--property">
         <Helmet>
@@ -99,7 +81,7 @@ function Room(): JSX.Element {
                   {type}
                 </li>
                 <li className="property__feature property__feature--bedrooms">
-                  {rooms > 1 ? `${rooms} Bedrooms` : `${rooms} Bedroom`}
+                  {bedrooms > 1 ? `${bedrooms} Bedrooms` : `${bedrooms} Bedroom`}
                 </li>
                 <li className="property__feature property__feature--adults">
                   {maxAdults > 1 ? `Max ${maxAdults} adults` : `Max ${maxAdults} adult`}
@@ -121,7 +103,7 @@ function Room(): JSX.Element {
                 <h2 className="property__host-title">Meet the host</h2>
                 <div className="property__host-user user">
                   <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src={host.avatar} width="74" height="74" alt="Host avatar" />
+                    <img className="property__avatar user__avatar" src={host.avatarUrl} width="74" height="74" alt="Host avatar" />
                   </div>
                   <span className="property__user-name">
                     {host.name}
@@ -140,7 +122,7 @@ function Room(): JSX.Element {
               <section className="property__reviews reviews">
                 {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
                 <ul className="reviews__list">
-                  {/* <Comments reviews={reviews} /> */}
+                  {/* <Comments /> */}
                 </ul>
                 <ReviewForm />
               </section>

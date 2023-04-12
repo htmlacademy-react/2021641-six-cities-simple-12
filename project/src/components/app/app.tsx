@@ -7,16 +7,16 @@ import NotFound from '../../pages/not-found/not-found';
 import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import ScrollTop from '../scroll-top/scroll-top';
-import PrivateRoute from '../private-route/private-route';
-// import Spinner from '../spinner/spinner';
+import Spinner from '../spinner/spinner';
+import { AuthorizationStatus } from '../../const';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  // const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  // if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
-  //   return (<Spinner />);
-  // }
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersDataLoading) {
+    return (<Spinner />);
+  }
 
   return (
     <HelmetProvider>
@@ -25,11 +25,7 @@ function App(): JSX.Element {
         <Routes>
           <Route
             path={AppRoute.Root}
-            element={
-              <PrivateRoute authorizationStatus={authorizationStatus}>
-                <SixCities />
-              </PrivateRoute>
-            }
+            element={<SixCities />}
           />
           <Route
             path={AppRoute.Login}

@@ -1,7 +1,9 @@
 type Host = {
-  avatar: string;
+  id: number;
+  avatarUrl: string;
   name: string;
   status: boolean;
+  isPro: boolean;
 }
 
 type Location = {
@@ -25,7 +27,7 @@ export type Offer = {
     description: string;
     price: number;
     rating: number;
-    rooms: number;
+    bedrooms: number;
     maxAdults: number;
     goods: string[];
     host: Host;

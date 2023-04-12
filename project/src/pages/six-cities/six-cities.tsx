@@ -1,18 +1,26 @@
-import {Link, Navigate} from 'react-router-dom';
-import {AppRoute} from '../../const';
+import {Navigate} from 'react-router-dom';
+import {AppRoute, AuthorizationStatus} from '../../const';
 import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
+import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks/index';
+import Login from '../login/login';
 
 function SixCities(): JSX.Element {
   const activeOffer = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  // const isCurrentOfferLoading = useAppSelector((state) => state.isCurrentOfferLoading);
   const filteredOffers = offers.filter(({city}) => city.name === activeOffer);
   // const city = citys.find((item) => item.name === activeOffer);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const offer = filteredOffers.find((filtredOffer) => filtredOffer.city.name === activeOffer);
 
   const city = offer?.city;
+
+  if (authorizationStatus === AuthorizationStatus.NoAuth) {
+    return <Login />;
+  }
 
   if (city === undefined) {
     return <Navigate to={AppRoute.NotFound} replace />;
@@ -20,30 +28,7 @@ function SixCities(): JSX.Element {
 
   return (
     <div className="page--main">
-      <div className="container">
-        <div className="header__wrapper">
-          <div className="header__left">
-            <Link className="header__logo-link header__logo-link--active" to="/">
-              <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-            </Link>
-          </div>
-          <nav className="header__nav">
-            <ul className="header__nav-list">
-              <li className="header__nav-item user">
-                <div className="header__nav-profile">
-                  <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                </div>
-              </li>
-              <li className="header__nav-item">
-                <Link className="header__nav-link" to="/">
-                  <span className="header__signout">Sign out</span>
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
+      <Header />
       <main className={`page__main page__main--index ${filteredOffers.length === 0 ? 'page__main--index-empty' : ''}`}>
         <Helmet>
           <title>main</title>
@@ -53,7 +38,7 @@ function SixCities(): JSX.Element {
           <SitySort />
         </div>
         <div className="cities">
-          <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} className="cities" />
+          <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} />
         </div>
       </main>
     </div>
