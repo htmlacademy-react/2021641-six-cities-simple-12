@@ -1,14 +1,19 @@
 import {Link, useNavigate} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
-import {useRef, FormEvent} from 'react';
+import {useRef, FormEvent, useState, SyntheticEvent} from 'react';
 import {useAppDispatch} from '../../hooks/index';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
-import {AppRoute} from '../../const';
+import {AppRoute, Cities} from '../../const';
+import {getRandomArrayItem} from '../../utils';
+import Header from '../../components/header/header';
+import {cityChange} from '../../store/action';
 
 function Login(): JSX.Element {
+  const [randomCity,] = useState(getRandomArrayItem(Cities));
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -29,19 +34,15 @@ function Login(): JSX.Element {
     }
   };
 
+  const onClickRandomCity = (evt: SyntheticEvent<EventTarget>) => {
+    evt.preventDefault();
+    dispatch(cityChange(randomCity as string));
+    navigate(AppRoute.Root, {replace: true});
+  };
+
   return (
     <div className="page--login">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left">
-              <Link className="header__logo-link" to="/">
-                <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41" />
-              </ Link>
-            </div>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="page__main page__main--login">
         <Helmet>
@@ -50,7 +51,7 @@ function Login(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form onSubmit={onClickSubmit} className="login__form form" action="#" method="post">
+            <form onSubmit={onClickSubmit} className="login__form form" action="" method="post">
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input ref={loginRef} className="login__input form__input" type="email" name="email" placeholder="Email" required />
@@ -64,8 +65,8 @@ function Login(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to="/">
-                <span>Amsterdam</span>
+              <Link className="locations__item-link" onClick={(evt) => onClickRandomCity(evt)} to={AppRoute.Root}>
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>

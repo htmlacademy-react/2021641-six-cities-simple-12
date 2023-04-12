@@ -2,11 +2,30 @@ import {AxiosInstance} from 'axios';
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {AppDispatch, State} from '../types/state';
 import {Offer, OfferId} from '../types/offer';
-import {loadOffers,loadOffer,loadOffersNearby, requireAuthorization, setOffersDataLoadingStatus} from './action';
+import {loadOffers,
+  getUserData,
+  loadOffer,
+  loadOffersNearby,
+  requireAuthorization,
+  setOffersDataLoadingStatus,
+  setCurrentOfferLoadingStatus,
+  setError,
+} from './action';
 import {saveToken, dropToken} from '../services/token';
-import {APIRoute, AuthorizationStatus} from '../const';
+import {APIRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR} from '../const';
 import {AuthData} from '../types/auth-data';
 import {UserData} from '../types/user-data';
+import {store} from './';
+
+export const clearErrorAction = createAsyncThunk(
+  'user/clearError',
+  () => {
+    setTimeout(
+      () => store.dispatch(setError(null)),
+      TIMEOUT_SHOW_ERROR,
+    );
+  }
+);
 
 export const fetchOffersAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -17,8 +36,8 @@ export const fetchOffersAction = createAsyncThunk<void, undefined, {
   async (_arg, {dispatch, extra: api}) => {
     dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<Offer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOffers(data));
+    dispatch(setOffersDataLoadingStatus(false));
   },
 );
 
@@ -29,8 +48,10 @@ export const fetchOfferAction = createAsyncThunk<void, OfferId, {
 }>(
   'data/loadOffer',
   async (offerId, { dispatch, extra: api }) => {
+    dispatch(setCurrentOfferLoadingStatus(true));
     const { data } = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
     dispatch(loadOffer(data));
+    dispatch(setCurrentOfferLoadingStatus(false));
   },
 );
 
@@ -72,6 +93,8 @@ export const loginAction = createAsyncThunk<void, AuthData, {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     saveToken(token);
     dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    const {data} = await api.get<UserData>(APIRoute.Login);
+    dispatch(getUserData(data));
   },
 );
 
@@ -82,8 +105,12 @@ export const logoutAction = createAsyncThunk<void, undefined, {
 }>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    try {
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    } catch {
+      dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    }
   },
 );

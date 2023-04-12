@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {cityChange} from '../../store/action';
 
 function SitySort (): JSX.Element {
-  const currentCity = useAppSelector((state) => state.city);
+  const activeOffer = useAppSelector((state) => state.city);
   const dispatch = useAppDispatch();
 
   return (
@@ -13,7 +13,7 @@ function SitySort (): JSX.Element {
         {Cities && Cities.length > 0 && Cities.map((city) => (
           <li key={city} className="locations__item">
             <Link
-              className={`locations__item-link tabs__item ${city === currentCity ? 'tabs__item--active' : ''}`}
+              className={`locations__item-link tabs__item ${city === activeOffer ? 'tabs__item--active' : ''}`}
               to="/"
               onClick={(event) => {
                 event.preventDefault();
