@@ -2,12 +2,13 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {logoutAction} from '../../store/api-actions';
-import {AuthorizationStatus} from '../../const';
+import {AuthorizationStatus, DEFAULT_AVATAR_URL} from '../../const';
 
 function Header ():JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  // const user = useAppSelector((state) => state.user);
+  const userData = useAppSelector((state) => state.userData);
   const dispatch = useAppDispatch();
+
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ?
@@ -23,8 +24,15 @@ function Header ():JSX.Element {
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
                   <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                    <div
+                      className="header__avatar-wrapper user__avatar-wrapper"
+                      style={{
+                        backgroundImage: `url(${userData?.avatarUrl ?? DEFAULT_AVATAR_URL})`,
+                        borderRadius: '50%',
+                      }}
+                    >
+                    </div>
+                    <span className="header__user-name user__name">{userData?.email}</span>
                   </div>
                 </li>
                 <li className="header__nav-item">
@@ -56,10 +64,6 @@ function Header ():JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <div className="header__nav-profile">
-                    <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                  </div>
                 </li>
                 <li className="header__nav-item">
                   <Link className="header__nav-link" to='/'>

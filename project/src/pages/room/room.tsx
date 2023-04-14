@@ -1,33 +1,36 @@
 import {useParams, Navigate} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import Header from '../../components/header/header';
-import ReviewForm from '../../components/review-form/review-form';
 import EquipmentList from '../../components/equipment-list/equipment-list';
 import RoomPhoto from '../../components/room-photo/room-photo';
-// import Comments from '../../components/comments/comments';
 import PlacesList from '../../components/places-list/places-list';
+import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import {changeRating} from '../../utils';
-import {AppRoute} from '../../const';
+import {AppRoute, MAX_NUMBER_REVIEWS, MAX_NUMBER_IMAGE} from '../../const';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {store} from '../../store';
 import {Offer} from '../../types/offer';
-import {fetchOfferAction, fetchOffersNearbyAction} from '../../store/api-actions';
+import {fetchOfferAction, fetchOffersNearbyAction, fetchReviewsAction} from '../../store/api-actions';
 
 function Room(): JSX.Element {
   const currentOffer = useAppSelector((state) => state.currentOffer);
   const offersNearby = useAppSelector((state) => state.offersNearby);
   const isCurrentOfferLoading = useAppSelector((state) => state.isCurrentOfferLoading);
-  const {id} = useParams();
-  const offerId = Number(id);
+  const currentReviews = useAppSelector((state) => state.currentReviews);
+  const offerId = useParams<string>();
+  const currentOfferId = Number(offerId.id);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    store.dispatch(fetchOfferAction(offerId));
-    store.dispatch(fetchOffersNearbyAction(offerId));
-  }, [offerId, dispatch]);
+    dispatch(fetchOfferAction(currentOfferId));
+    dispatch(fetchOffersNearbyAction(currentOfferId));
+    dispatch(fetchReviewsAction(currentOfferId));
+  }, [currentOfferId, dispatch]);
+
+  let sortingReviews = currentReviews.slice();
+  sortingReviews = sortingReviews.sort((b, a) => new Date(a.date).getTime() - new Date(b.date).getTime()).slice(0, MAX_NUMBER_REVIEWS);
 
   let allOffers: Offer[] = [];
 
@@ -43,7 +46,7 @@ function Room(): JSX.Element {
     return (<Navigate to={AppRoute.NotFound} replace />);
   }
 
-  const {images, rating, bedrooms, maxAdults, goods, price, host, isPremium, city, type} = currentOffer;
+  const {images, rating, bedrooms, maxAdults, goods, price, host, isPremium, city, type, id} = currentOffer;
 
   return (
     <div className="page">
@@ -56,9 +59,9 @@ function Room(): JSX.Element {
         <section className="property">
           <div className="property__gallery-container container">
             <div className="property__gallery">
-              {images.map((image, index) =>
+              {images.map((image, index) => (
                 <RoomPhoto key={String(image) + String(index)} image={image}/>
-              )}
+              )).slice(0, MAX_NUMBER_IMAGE)}
             </div>
           </div>
           <div className="property__container container">
@@ -119,19 +122,20 @@ function Room(): JSX.Element {
                   </p>
                 </div>
               </div>
-              <section className="property__reviews reviews">
-                {/* <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2> */}
+              <ReviewList reviews={sortingReviews} currentOfferId={currentOfferId}/>
+              {/* <section className="property__reviews reviews">
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
                 <ul className="reviews__list">
-                  {/* <Comments /> */}
+                  <Comments />
                 </ul>
                 <ReviewForm />
-              </section>
+              </section> */}
             </div>
           </div>
-          <Map offers={allOffers} city={city} activeItem={offerId} className="property__map" />
+          <Map offers={allOffers} city={city} activeItem={id} className="property__map" />
         </section>
         <div className="container">
-          <PlacesList offers={offersNearby} num={offerId} />
+          <PlacesList offers={offersNearby} num={id} />
         </div>
       </main>
     </div>

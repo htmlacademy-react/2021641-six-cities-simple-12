@@ -21,4 +21,5 @@ export const sortOffers = (offers: Offer[], sortList: {[key: string]: string}, t
       return offers;
   }
 };
+
 export const getRandomArrayItem = (items: string[] | number[]):string | number => items[Math.floor(Math.random() * items.length)];
