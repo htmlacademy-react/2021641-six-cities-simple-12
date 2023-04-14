@@ -1,4 +1,4 @@
-import {Route, BrowserRouter, Routes} from 'react-router-dom';
+import {Route, Routes} from 'react-router-dom';
 import {HelmetProvider } from 'react-helmet-async';
 import {useAppSelector} from '../../hooks/index';
 import {AppRoute} from '../../const';
@@ -8,7 +8,9 @@ import Login from '../../pages/login/login';
 import Room from '../../pages/room/room';
 import ScrollTop from '../scroll-top/scroll-top';
 import Spinner from '../spinner/spinner';
-import { AuthorizationStatus } from '../../const';
+import {AuthorizationStatus} from '../../const';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
@@ -20,7 +22,7 @@ function App(): JSX.Element {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
+      <HistoryRouter history={browserHistory}>
         <ScrollTop />
         <Routes>
           <Route
@@ -40,7 +42,7 @@ function App(): JSX.Element {
             element={<NotFound />}
           />
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </HelmetProvider>
   );
 }

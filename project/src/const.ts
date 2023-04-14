@@ -11,6 +11,7 @@ export enum APIRoute {
   Offers = '/hotels',
   Login = '/login',
   Logout = '/logout',
+  Reviews = '/comments'
 }
 
 export enum AuthorizationStatus {
@@ -39,4 +40,6 @@ export const DEFAULT_CITY = 'Paris';
 export const DEFAULT_SORT_TYPE = 'Popular';
 export const URL_MARKER_DEFAULT = '/img/pin.svg';
 export const URL_MARKER_CURRENT = '/img/pin-active.svg';
-export const TIMEOUT_SHOW_ERROR = 2000;
+export const DEFAULT_AVATAR_URL = '../img/avatar.svg';
+export const MAX_NUMBER_REVIEWS = 10;
+export const MAX_NUMBER_IMAGE = 6;

@@ -1,4 +1,5 @@
 import {Offer} from './offer';
+import {Review} from './review';
 import {AuthorizationStatus} from '../const';
 import {UserData} from './user-data';
 
@@ -12,5 +13,6 @@ export type InitialState = {
   isOffersDataLoading: boolean;
   isCurrentOfferLoading: boolean;
   userData: UserData | null;
-  error: string | null;
+  currentReviews: Review[];
+  reviewIsLoading: boolean;
 };
