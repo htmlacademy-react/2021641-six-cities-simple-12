@@ -4,7 +4,7 @@ import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
 import SitySort from '../../components/sity-sort/sity-sort';
 import Header from '../../components/header/header';
-import {useAppSelector} from '../../hooks/index';
+import {useAppSelector} from '../../hooks/index/index';
 import Login from '../login/login';
 import {getAuthorizationStatus} from '../../store/user-process/user-process.selector';
 import {getOffers} from '../../store/offers-data/offers-process.selector';
