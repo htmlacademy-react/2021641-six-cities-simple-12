@@ -4,16 +4,16 @@ import {useRef, FormEvent, useState, SyntheticEvent} from 'react';
 import {useAppDispatch} from '../../hooks/index';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
-import {AppRoute, Cities} from '../../const';
+import {AppRoute, Cities, REGEX} from '../../const';
 import {getRandomArrayItem} from '../../utils';
 import Header from '../../components/header/header';
-import {cityChange} from '../../store/action';
+import {changeCity} from '../../store/sorting-process/sorting-process.slice';
+import {toast} from 'react-toastify';
 
 function Login(): JSX.Element {
   const [randomCity,] = useState(getRandomArrayItem(Cities));
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
-  // const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -25,18 +25,19 @@ function Login(): JSX.Element {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
+    if (loginRef.current !== null && passwordRef.current !== null && REGEX.test(passwordRef.current.value)) {
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
       });
-      navigate(AppRoute.Root);
+    } else {
+      toast.warn('Пароль должен содержать хотя бы одну цифру и букву');
     }
   };
 
   const onClickRandomCity = (evt: SyntheticEvent<EventTarget>) => {
     evt.preventDefault();
-    dispatch(cityChange(randomCity as string));
+    dispatch(changeCity(randomCity as string));
     navigate(AppRoute.Root, {replace: true});
   };
 

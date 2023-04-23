@@ -1,13 +1,14 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, memo} from 'react';
 import {SortsList} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
-import {sortChange} from '../../store/action';
+import {changeSort} from '../../store/sorting-process/sorting-process.slice';
+import {getTypeSorting} from '../../store/sorting-process/sorting-process.selector';
 // import HotelSortItem from '../hotel-sort-item/hotel-sort-item';
 
 function HotelSort (): JSX.Element {
   const [visible, setVisible] = useState(false);
   const dispatch = useAppDispatch();
-  const sortType = useAppSelector((state) => state.sortType);
+  const sortType = useAppSelector(getTypeSorting);
 
   useEffect(() => {
     const sortingType = document.querySelector('.places__sorting-type');
@@ -48,7 +49,7 @@ function HotelSort (): JSX.Element {
               className={`places__option ${sortItem === sortType ? 'places__option__active' : ''}`}
               key={sortItem}
               onClick={() => {
-                dispatch(sortChange(sortItem));
+                dispatch(changeSort(sortItem));
               }}
               tabIndex={0}
             >
@@ -61,4 +62,4 @@ function HotelSort (): JSX.Element {
   );
 }
 
-export default HotelSort;
+export default memo(HotelSort);

@@ -1,7 +1,8 @@
-import {useState, Fragment, FormEvent} from 'react';
+import {useState, Fragment, FormEvent, useEffect} from 'react';
 import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {reviewAction} from '../../store/api-actions';
 import {UserReview} from '../../types/user-review';
+import {getReviewIsLoading, getTextClearStatus} from '../../store/offers-data/offers-process.selector';
 
 type ReviewFormProps ={
   currentOfferId: number;
@@ -11,8 +12,16 @@ function ReviewForm({currentOfferId}: ReviewFormProps): JSX.Element {
   const [value, setValue] = useState<string>('');
   const [star, setStar] = useState<string>('0');
 
-  const isLoading = useAppSelector((state) => state.reviewIsLoading);
+  const isLoading = useAppSelector(getReviewIsLoading);
+  const textClear = useAppSelector(getTextClearStatus);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (textClear === true) {
+      setValue('');
+      setStar('0');
+    }
+  }, [textClear]);
 
   const onSubmit = (userReview: UserReview) => {
     dispatch(reviewAction(userReview));
@@ -46,7 +55,7 @@ function ReviewForm({currentOfferId}: ReviewFormProps): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {arr.map((title, index) => (
           <Fragment key={title}>
-            <input onChange={handleStarsChange} className="form__rating-input visually-hidden" name="rating" value={`${arr.length - index}`} id={`${arr.length - index}-stars`} type="radio" disabled={isLoading}/>
+            <input checked={star === `${arr.length - index}`} onChange={handleStarsChange} className="form__rating-input visually-hidden" name="rating" value={`${arr.length - index}`} id={`${arr.length - index}-stars`} type="radio" disabled={isLoading}/>
             <label htmlFor={`${arr.length - index}-stars`} className="reviews__rating-label form__rating-label" title={title}>
               <svg className="form__star-image" width="37" height="33">
                 <use xlinkHref="#icon-star"></use>

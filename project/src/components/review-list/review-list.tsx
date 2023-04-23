@@ -3,6 +3,7 @@ import Comments from '../comments/comments';
 import {Review} from '../../types/review';
 import {useAppSelector} from '../../hooks/index';
 import {AuthorizationStatus} from '../../const';
+import {getAuthorizationStatus} from '../../store/user-process/user-process.selector';
 
 type ReviewListProps = {
   reviews: Review[];
@@ -10,7 +11,7 @@ type ReviewListProps = {
 }
 
 function ReviewList({reviews, currentOfferId}: ReviewListProps) {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
