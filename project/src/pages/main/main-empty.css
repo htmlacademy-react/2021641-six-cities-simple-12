@@ -1,0 +1,8 @@
+.cities {
+  height: 100vh;
+}
+
+.cities__button-empty {
+  background: #4481c3;
+  margin-top: 30px;
+}
