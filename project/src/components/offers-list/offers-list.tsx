@@ -8,6 +8,7 @@ import NoPlaces from '../no-places/no-places';
 import {AppRoute, SortsList} from '../../const';
 import {sortOffers} from '../../utils';
 import {useAppSelector} from '../../hooks/index';
+import {getTypeSorting} from '../../store/sorting-process/sorting-process.selector';
 
 type OfferListProps = {
   filteredOffers: Offer[];
@@ -17,7 +18,7 @@ type OfferListProps = {
 
 function OffersList ({filteredOffers, city, activeOffer}: OfferListProps): JSX.Element {
   const [activeItem, setActiveItem] = useState<number | null>(-1);
-  const sortType = useAppSelector((state) => state.sortType);
+  const sortType = useAppSelector(getTypeSorting);
   const sortedOffers = sortOffers(filteredOffers, SortsList, sortType);
 
   if (activeItem === null) {

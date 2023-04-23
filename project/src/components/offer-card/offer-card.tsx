@@ -2,6 +2,7 @@ import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute} from '../../const';
 import {changeRating} from '../../utils';
+import {memo} from 'react';
 
 type OfferProps = {
   offer: Offer;
@@ -60,4 +61,4 @@ function OfferCard ({offer, setActiveItem}: OfferProps): JSX.Element {
   );
 }
 
-export default OfferCard;
+export default memo(OfferCard);

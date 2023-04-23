@@ -3,10 +3,11 @@ import {AppRoute} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {logoutAction} from '../../store/api-actions';
 import {AuthorizationStatus, DEFAULT_AVATAR_URL} from '../../const';
+import {getAuthorizationStatus, getUserData} from '../../store/user-process/user-process.selector';
 
 function Header ():JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userData = useAppSelector((state) => state.userData);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const userData = useAppSelector(getUserData);
   const dispatch = useAppDispatch();
 
   return (

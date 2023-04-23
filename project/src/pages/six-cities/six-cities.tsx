@@ -6,14 +6,15 @@ import SitySort from '../../components/sity-sort/sity-sort';
 import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks/index';
 import Login from '../login/login';
+import {getAuthorizationStatus} from '../../store/user-process/user-process.selector';
+import {getOffers} from '../../store/offers-data/offers-process.selector';
+import {getCity} from '../../store/sorting-process/sorting-process.selector';
 
 function SixCities(): JSX.Element {
-  const activeOffer = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  // const isCurrentOfferLoading = useAppSelector((state) => state.isCurrentOfferLoading);
+  const activeOffer = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
   const filteredOffers = offers.filter(({city}) => city.name === activeOffer);
-  // const city = citys.find((item) => item.name === activeOffer);
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const offer = filteredOffers.find((filtredOffer) => filtredOffer.city.name === activeOffer);
 
   const city = offer?.city;
@@ -34,9 +35,7 @@ function SixCities(): JSX.Element {
           <title>main</title>
         </Helmet>
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <SitySort />
-        </div>
+        <SitySort />
         <div className="cities">
           <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} />
         </div>

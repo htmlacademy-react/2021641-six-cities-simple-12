@@ -20,6 +20,12 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  Sorting = 'SORTING',
+  User = 'USER',
+}
+
 export const Cities = [
   'Paris',
   'Cologne',
@@ -43,3 +49,4 @@ export const URL_MARKER_CURRENT = '/img/pin-active.svg';
 export const DEFAULT_AVATAR_URL = '../img/avatar.svg';
 export const MAX_NUMBER_REVIEWS = 10;
 export const MAX_NUMBER_IMAGE = 6;
+export const REGEX = /([a-z]+[0-9])|([0-9]+[a-z])/gi;

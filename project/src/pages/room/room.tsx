@@ -13,12 +13,13 @@ import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {Offer} from '../../types/offer';
 import {fetchOfferAction, fetchOffersNearbyAction, fetchReviewsAction} from '../../store/api-actions';
+import {getCurrentOffer, getOffersNearby, getCurrentOffersDataLoading, getCurrentReviews} from '../../store/offers-data/offers-process.selector';
 
 function Room(): JSX.Element {
-  const currentOffer = useAppSelector((state) => state.currentOffer);
-  const offersNearby = useAppSelector((state) => state.offersNearby);
-  const isCurrentOfferLoading = useAppSelector((state) => state.isCurrentOfferLoading);
-  const currentReviews = useAppSelector((state) => state.currentReviews);
+  const currentOffer = useAppSelector(getCurrentOffer);
+  const offersNearby = useAppSelector(getOffersNearby);
+  const isCurrentOfferLoading = useAppSelector(getCurrentOffersDataLoading);
+  const currentReviews = useAppSelector(getCurrentReviews);
   const offerId = useParams<string>();
   const currentOfferId = Number(offerId.id);
   const dispatch = useAppDispatch();
