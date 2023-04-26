@@ -2,7 +2,7 @@ import {Navigate} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {Helmet} from 'react-helmet-async';
 import OffersList from '../../components/offers-list/offers-list';
-import SitySort from '../../components/city-sort/city-sort';
+import CitySort from '../../components/city-sort/city-sort';
 import Header from '../../components/header/header';
 import {useAppSelector} from '../../hooks/index/index';
 import {getOffers} from '../../store/offers-data/offers-process.selector';
@@ -28,7 +28,7 @@ function SixCities(): JSX.Element {
           <title>main</title>
         </Helmet>
         <h1 className="visually-hidden">Cities</h1>
-        <SitySort />
+        <CitySort />
         <div className="cities">
           <OffersList activeOffer={activeOffer} city={city} filteredOffers={filteredOffers} />
         </div>

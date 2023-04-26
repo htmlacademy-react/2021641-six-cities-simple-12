@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../hooks/index/index';
 import {changeCity} from '../../store/sorting-process/sorting-process.slice';
 import {getCity} from '../../store/sorting-process/sorting-process.selector';
 
-function SitySort (): JSX.Element {
+function CitySort (): JSX.Element {
   const activeOffer = useAppSelector(getCity);
   const dispatch = useAppDispatch();
 
@@ -32,4 +32,4 @@ function SitySort (): JSX.Element {
   );
 }
 
-export default SitySort;
+export default CitySort;
