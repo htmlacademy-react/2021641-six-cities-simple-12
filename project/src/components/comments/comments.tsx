@@ -1,5 +1,5 @@
 import {Review} from '../../types/review';
-import {changeRating} from '../../utils';
+import {changeRating} from '../../utils/utils';
 
 type CommentsProps = {
   review: Review;

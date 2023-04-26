@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import {Offer} from '../../types/offer';
 import {AppRoute} from '../../const';
-import {changeRating} from '../../utils';
+import {changeRating} from '../../utils/utils';
 import {memo} from 'react';
 
 type OfferProps = {

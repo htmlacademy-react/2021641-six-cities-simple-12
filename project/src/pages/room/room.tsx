@@ -7,7 +7,7 @@ import PlacesList from '../../components/places-list/places-list';
 import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
-import {changeRating} from '../../utils';
+import {changeRating} from '../../utils/utils';
 import {AppRoute, MAX_NUMBER_REVIEWS, MAX_NUMBER_IMAGE} from '../../const';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';

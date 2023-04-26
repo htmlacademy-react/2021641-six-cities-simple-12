@@ -1,4 +1,4 @@
-import {Offer} from './types/offer';
+import {Offer} from '../types/offer';
 
 export function changeRating (item: number) {
   return (

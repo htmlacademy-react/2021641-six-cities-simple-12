@@ -1,19 +1,21 @@
-import {Link, useNavigate} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 import {Helmet} from 'react-helmet-async';
 import {useRef, FormEvent, useState, SyntheticEvent} from 'react';
-import {useAppDispatch} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/index';
 import {AuthData} from '../../types/auth-data';
 import {loginAction} from '../../store/api-actions';
-import {AppRoute, Cities, REGEX} from '../../const';
-import {getRandomArrayItem} from '../../utils';
+import {AppRoute, Cities, REGEX, AuthorizationStatus} from '../../const';
+import {getRandomArrayItem} from '../../utils/utils';
 import Header from '../../components/header/header';
 import {changeCity} from '../../store/sorting-process/sorting-process.slice';
 import {toast} from 'react-toastify';
+import {getAuthorizationStatus} from '../../store/user-process/user-process.selector';
 
 function Login(): JSX.Element {
   const [randomCity,] = useState(getRandomArrayItem(Cities));
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -21,6 +23,10 @@ function Login(): JSX.Element {
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
+
+  if (authorizationStatus === AuthorizationStatus.Auth) {
+    return (<Navigate to={AppRoute.Root} replace/>);
+  }
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();

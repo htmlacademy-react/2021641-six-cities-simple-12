@@ -1,6 +1,6 @@
 import {Link} from 'react-router-dom';
 import {Cities} from '../../const';
-import {useAppDispatch, useAppSelector} from '../../hooks/index';
+import {useAppDispatch, useAppSelector} from '../../hooks/index/index';
 import {changeCity} from '../../store/sorting-process/sorting-process.slice';
 import {getCity} from '../../store/sorting-process/sorting-process.selector';
 
