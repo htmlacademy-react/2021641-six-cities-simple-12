@@ -43,7 +43,7 @@ function Header ():JSX.Element {
                       dispatch(logoutAction());
                     }}
                     className="header__nav-link"
-                    to={AppRoute.Login}
+                    to={''}
                   >
                     <span className="header__signout">Sign out</span>
                   </Link>
@@ -67,7 +67,7 @@ function Header ():JSX.Element {
                 <li className="header__nav-item user">
                 </li>
                 <li className="header__nav-item">
-                  <Link className="header__nav-link" to='/'>
+                  <Link className="header__nav-link" to={AppRoute.Login}>
                     <span className="header__signout">Sign in</span>
                   </Link>
                 </li>

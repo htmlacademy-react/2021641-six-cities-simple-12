@@ -6,7 +6,7 @@ import Map from '../map/map';
 import HotelSort from '../hotel-sort/hotel-sort';
 import NoPlaces from '../no-places/no-places';
 import {AppRoute, SortsList} from '../../const';
-import {sortOffers} from '../../utils';
+import {sortOffers} from '../../utils/utils';
 import {useAppSelector} from '../../hooks/index';
 import {getTypeSorting} from '../../store/sorting-process/sorting-process.selector';
 

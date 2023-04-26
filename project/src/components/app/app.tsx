@@ -10,7 +10,7 @@ import ScrollTop from '../scroll-top/scroll-top';
 import Spinner from '../spinner/spinner';
 import {getAuthorizationStatus} from '../../store/user-process/user-process.selector';
 import {getOffersDataLoading, getErrorStatus} from '../../store/offers-data/offers-process.selector';
-import HistoryRouter from '../history-route/history-route';
+import HistoryRouter from '../history-router/history-router';
 import browserHistory from '../../browser-history';
 import MainEmpty from '../../pages/main/main-empty';
 
