@@ -1,14 +1,14 @@
 import {sortingProcess, changeCity, changeSort} from './sorting-process.slice';
 import {SortingProcess} from '../../types/state';
-import {DEFAULT_CITY, DEFAULT_SORT_TYPE, Cities, SortsList} from '../../const';
+import {Default, Cities, SortsList} from '../../const';
 
 describe('sortingProcess', () => {
   let initialState: SortingProcess;
 
   beforeEach(() => {
     initialState = {
-      city: DEFAULT_CITY,
-      sorting: DEFAULT_SORT_TYPE,
+      city: Default.city,
+      sorting: Default.sort,
     };
   });
 
@@ -18,11 +18,11 @@ describe('sortingProcess', () => {
   });
   test('change city location', () => {
     expect(sortingProcess.reducer(initialState, changeCity(Cities[3])))
-      .toEqual({city: Cities[3], sorting: DEFAULT_SORT_TYPE});
+      .toEqual({city: Cities[3], sorting: Default.sort});
   });
 
   test('change sorting', () => {
     expect(sortingProcess.reducer(initialState, changeSort(SortsList.POPULAR)))
-      .toEqual({city: DEFAULT_CITY, sorting: SortsList.POPULAR});
+      .toEqual({city: Default.city, sorting: SortsList.POPULAR});
   });
 });

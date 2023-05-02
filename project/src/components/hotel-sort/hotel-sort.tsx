@@ -3,7 +3,6 @@ import {SortsList} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {changeSort} from '../../store/sorting-process/sorting-process.slice';
 import {getTypeSorting} from '../../store/sorting-process/sorting-process.selector';
-// import HotelSortItem from '../hotel-sort-item/hotel-sort-item';
 
 function HotelSort (): JSX.Element {
   const [visible, setVisible] = useState(false);
@@ -28,10 +27,6 @@ function HotelSort (): JSX.Element {
       document.removeEventListener('click', closeSortType);
     };
   }, []);
-
-  // const toggleSort = () => {
-  //   setVisible(!visible);
-  // };
 
   return (
     <form className="places__sorting" action="#" method="get">

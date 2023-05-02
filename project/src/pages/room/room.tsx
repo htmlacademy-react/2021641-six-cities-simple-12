@@ -8,7 +8,7 @@ import ReviewList from '../../components/review-list/review-list';
 import Map from '../../components/map/map';
 import Spinner from '../../components/spinner/spinner';
 import {changeRating} from '../../utils/utils';
-import {AppRoute, MAX_NUMBER_REVIEWS, MAX_NUMBER_IMAGE} from '../../const';
+import {AppRoute, MaxNumber} from '../../const';
 import {useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {Offer} from '../../types/offer';
@@ -31,7 +31,7 @@ function Room(): JSX.Element {
   }, [currentOfferId, dispatch]);
 
   let sortingReviews = currentReviews.slice();
-  sortingReviews = sortingReviews.sort((b, a) => new Date(a.date).getTime() - new Date(b.date).getTime()).slice(0, MAX_NUMBER_REVIEWS);
+  sortingReviews = sortingReviews.sort((b, a) => new Date(a.date).getTime() - new Date(b.date).getTime()).slice(0, MaxNumber.reviews);
 
   let allOffers: Offer[] = [];
 
@@ -62,7 +62,7 @@ function Room(): JSX.Element {
             <div className="property__gallery">
               {images.map((image, index) => (
                 <RoomPhoto key={String(image) + String(index)} image={image}/>
-              )).slice(0, MAX_NUMBER_IMAGE)}
+              )).slice(0, MaxNumber.image)}
             </div>
           </div>
           <div className="property__container container">
@@ -124,13 +124,6 @@ function Room(): JSX.Element {
                 </div>
               </div>
               <ReviewList reviews={sortingReviews} currentOfferId={currentOfferId}/>
-              {/* <section className="property__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{reviews.length}</span></h2>
-                <ul className="reviews__list">
-                  <Comments />
-                </ul>
-                <ReviewForm />
-              </section> */}
             </div>
           </div>
           <Map offers={allOffers} city={city} activeItem={id} className="property__map" />

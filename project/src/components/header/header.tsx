@@ -2,7 +2,7 @@ import {Link} from 'react-router-dom';
 import {AppRoute} from '../../const';
 import {useAppSelector, useAppDispatch} from '../../hooks/index';
 import {logoutAction} from '../../store/api-actions';
-import {AuthorizationStatus, DEFAULT_AVATAR_URL} from '../../const';
+import {AuthorizationStatus, Default} from '../../const';
 import {getAuthorizationStatus, getUserData} from '../../store/user-process/user-process.selector';
 
 function Header ():JSX.Element {
@@ -28,7 +28,7 @@ function Header ():JSX.Element {
                     <div
                       className="header__avatar-wrapper user__avatar-wrapper"
                       style={{
-                        backgroundImage: `url(${userData?.avatarUrl ?? DEFAULT_AVATAR_URL})`,
+                        backgroundImage: `url(${userData?.avatarUrl ?? Default.avatar})`,
                         borderRadius: '50%',
                       }}
                     >
