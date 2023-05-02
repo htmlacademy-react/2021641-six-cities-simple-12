@@ -26,8 +26,8 @@ function OffersList ({filteredOffers, city, activeOffer}: OfferListProps): JSX.E
   }
 
   return (
-    <div className={`cities__places-container container ${filteredOffers.length === 0 ? 'cities__places-container--empty' : ''}`}>
-      {filteredOffers.length > 0 ? (
+    <div className={`cities__places-container container ${!filteredOffers.length ? 'cities__places-container--empty' : ''}`}>
+      {filteredOffers.length ? (
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">{filteredOffers.length} places to stay in {activeOffer}</b>
@@ -45,9 +45,9 @@ function OffersList ({filteredOffers, city, activeOffer}: OfferListProps): JSX.E
           </div>
         </section>) : <NoPlaces />}
       <div className="cities__right-section">
-        {filteredOffers.length > 0 ? (
+        {filteredOffers.length && (
           <Map city={city} offers={filteredOffers} activeItem={activeItem} className="cities__map" />
-        ) : ''}
+        )}
       </div>
     </div>
   );

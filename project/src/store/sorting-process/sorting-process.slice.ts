@@ -1,10 +1,10 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {NameSpace, DEFAULT_CITY, DEFAULT_SORT_TYPE} from '../../const';
+import {NameSpace, Default} from '../../const';
 import {SortingProcess} from '../../types/state';
 
 const initialState: SortingProcess = {
-  city: DEFAULT_CITY,
-  sorting: DEFAULT_SORT_TYPE,
+  city: Default.city,
+  sorting: Default.sort,
 };
 
 export const sortingProcess = createSlice({

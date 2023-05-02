@@ -41,11 +41,20 @@ export const SortsList = {
   TOP_RATED: 'Top rated first',
 };
 
-export const DEFAULT_CITY = 'Paris';
-export const DEFAULT_SORT_TYPE = 'Popular';
-export const URL_MARKER_DEFAULT = '/img/pin.svg';
-export const URL_MARKER_CURRENT = '/img/pin-active.svg';
-export const DEFAULT_AVATAR_URL = '../img/avatar.svg';
-export const MAX_NUMBER_REVIEWS = 10;
-export const MAX_NUMBER_IMAGE = 6;
+export const Default = {
+  city: 'Paris',
+  sort: 'Popular',
+  avatar: '../img/avatar.svg',
+};
+
+export const UrlMarker = {
+  default: '/img/pin.svg',
+  current: '/img/pin-active.svg',
+};
+
+export const MaxNumber = {
+  reviews: 10,
+  image: 6,
+};
+
 export const REGEX = /([a-z]+[0-9])|([0-9]+[a-z])/gi;
